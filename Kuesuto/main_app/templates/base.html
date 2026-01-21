@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cat Collector</title>
+  <title>Kuesuto</title>
 
   <!-- Materialize CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -31,29 +31,12 @@
         </a>
 
         <!-- Logo -->
-        <a href="{% url 'home' %}" class="brand-logo">CatCollector</a>
+        <a href="{% url 'home' %}" class="brand-logo">Kuesuto</a>
 
         <!-- Desktop Menu -->
         <ul class="right hide-on-med-and-down">
           <li><a href="{% url 'about' %}">About</a></li>
-
-          {% if user.is_authenticated %}
-            <li><a href="{% url 'index' %}">View All My Cats</a></li>
-            <li><a href="{% url 'cats_create' %}">Add a Cat</a></li>
-
-            <li><a href="{% url 'toys_index' %}">View All My Toys</a></li>
-            <li><a href="{% url 'toys_create' %}">Add a Toy</a></li>
-            <li>
-              <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn" style="border-radius: 3px; background-color: rgb(252, 234, 231); color: rgb(225, 70, 56); margin-right: 7px;">Logout</button>
-              </form>
-            </li>
-            <li>Hi {{ user.username }}</li>
-          {% else %}
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="{% url 'signup' %}">Signup</a></li>
-          {% endif %}
+          <li><a href="{% url 'plans_index' %}">View All My Plans</a></li>
         </ul>
 
       </div>
@@ -63,24 +46,7 @@
   <!-- Mobile Menu -->
   <ul class="sidenav" id="mobile">
     <li><a href="{% url 'about' %}">About</a></li>
-
-    {% if user.is_authenticated %}
-      <li><a href="{% url 'index' %}">View All My Cats</a></li>
-      <li><a href="{% url 'cats_create' %}">Add a Cat</a></li>
-
-      <li><a href="{% url 'toys_index' %}">View All My Toys</a></li>
-      <li><a href="{% url 'toys_create' %}">Add a Toy</a></li>
-      <li>
-        <form action="{% url 'logout' %}" method="post">
-          {% csrf_token %}
-          <button type="submit" class="btn" style="border-radius: 3px; background-color: rgb(252, 234, 231); color: rgb(225, 70, 56); margin-right: 7px;">Logout</button>
-        </form>
-      </li>
-      <li>Hi {{ user.username }}</li>
-    {% else %}
-      <li><a href="{% url 'login' %}">Login</a></li>
-      <li><a href="{% url 'signup' %}">Signup</a></li>
-    {% endif %}
+    <li><a href="{% url 'plans_index' %}">View All My Plans</a></li>
   </ul>
 
   <main class="container">
@@ -89,7 +55,7 @@
   </main>
 
   <footer class="page-footer">
-    <div class="right">All Rights Reserved, &copy; 2026 Cat Collector &nbsp;</div>
+    <div class="right">All Rights Reserved, &copy; 2026 Kuesuto &nbsp;</div>
   </footer>
 
   <!-- Init Sidenav -->
