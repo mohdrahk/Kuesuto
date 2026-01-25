@@ -11,13 +11,8 @@ class Profile(models.Model):
     score = models.IntegerField(default=0)
     current_rank = models.ForeignKey('Rank', on_delete=models.SET_NULL, null=True, blank=True),
 
-def __str__(self):
-    return self.user.username
-
-
-
-
-
+    def __str__(self):
+        return self.user.username
 
 
 class Plan(models.Model):
@@ -37,3 +32,18 @@ class Plan(models.Model):
         return reverse("plans_detail", kwargs={"plan_id": self.id})
 
 
+class Task(models.Model):
+    name = models.CharField(max_length=200)
+    duration = models.CharField(max_length=50)
+    importance = models.BooleanField(default=False)
+    color = models.CharField(max_length=7)
+    notes = models.TextField(blank=True, null=True)
+    is_completed = models.BooleanField(default=False)
+    position = models.IntegerField()
+    deadline = models.DateField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name}"
