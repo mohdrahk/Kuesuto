@@ -8,11 +8,20 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
     score = models.IntegerField(default=0)
-    current_rank = models.ForeignKey('Rank', on_delete=models.SET_NULL, null=True, blank=True),
+    current_rank = models.ForeignKey('Rank', on_delete=models.SET_NULL, null=True, blank=True)
 
-def __str__(self):
-    return self.user.username
+    def __str__(self):
+        return self.user.username
 
+class Rank(models.Model):
+    name = models.CharField(max_length=50)
+    min_score = models.IntegerField(default=0)
+    max_score = models.IntegerField()
+    icon = models.ImageField()
+    order_position = models.IntegerField()
+
+    def __str__(self):
+        return self.name
 
 
 
