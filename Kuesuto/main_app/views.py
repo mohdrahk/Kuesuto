@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from .forms import PlanForm, TaskFormSet
 
+
 class PlanCreate(CreateView):
     model = Plan
     form_class = PlanForm
@@ -128,4 +129,7 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
 
 class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
-    success_url = '/'
+    success_url = '/plans/'
+
+class TaskDetail(LoginRequiredMixin, DetailView):
+    model = Task

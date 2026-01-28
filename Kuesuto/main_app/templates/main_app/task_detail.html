@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div style="display:flex; justify-content:space-between; align-items:center; gap:16px;">
+  <h1>{{ task.name }}</h1>
+
+  <div style="display:flex; gap:10px;">
+    <a class="btn red" href="{% url 'tasks_delete' task.id %}">Delete</a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <p><strong>Position:</strong> {{ task.position }}</p>
+    <p><strong>Duration:</strong> {{ task.duration }}</p>
+    <p><strong>Color:</strong> {{ task.color }}</p>
+    
+    <p><strong>Importance:</strong>
+      {% if task.importance %}
+        <span class="new badge orange" data-badge-caption="important"></span>
+      {% else %}
+        Normal
+      {% endif %}
+    </p>
+
+    {% if task.notes %}
+      <p><strong>Notes:</strong> {{ task.notes }}</p>
+    {% endif %}
+
+    {% if task.deadline %}
+      <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+    {% endif %}
+
+    <p><strong>Status:</strong>
+      {% if task.is_completed %}
+        <span class="new badge green" data-badge-caption="completed"></span>
+      {% else %}
+        <span class="new badge grey" data-badge-caption="not completed"></span>
+      {% endif %}
+    </p>
+
+    <p><strong>Created:</strong> {{ task.created_at }}</p>
+    <p><strong>Updated:</strong> {{ task.updated_at }}</p>
+  </div>
+</div>
+
+<h4>Parent Plan</h4>
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">
+      <a href="{% url 'plans_detail' task.plan.id %}">{{ task.plan.name }}</a>
+    </span>
+    <p><strong>Duration:</strong> {{ task.plan.duration }}</p>
+    <p><strong>Status:</strong>
+      {% if task.plan.is_completed %}
+        Completed
+      {% else %}
+        In progress
+      {% endif %}
+    </p>
+  </div>
+</div>
+
+<p style="margin-top:18px;">
+  <a class="btn grey" href="{% url 'plans_detail' task.plan.id %}">Back to Plan</a>
+</p>
+
+{% endblock %}
