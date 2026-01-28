@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% if object %}
+    <h1>Edit <span class="teal-text">{{ object.name }}</span></h1>
+  {% else %}
+    <h1>Add Plan</h1>
+  {% endif %}
+
+  <form action="" method="post">
+    {% csrf_token %}
+
+    <h4>Quest Details</h4>
+    <table>
+      {{ form.as_table }}
+    </table>
+
+    <hr>
+
+    <h4>Tasks ( <span id="task-count">0</span> )</h4>
+
+    {{ task_formset.management_form }}
+
+    <div id="tasks-container">
+      {% for tform in task_formset %}
+        <div class="card-panel" >
+          <table>
+            {{ tform.as_table }}
+          </table>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div id="empty-form" style="display: none;">
+      <div class="card-panel">
+        <table>
+          {{ task_formset.empty_form.as_table }}
+        </table>
+      </div>
+    </div>
+
+    <button type="button" class="btn" id="add-task-btn"> + Add Task </button>
+
+    <br><br>
+
+    <input type="submit" value="Submit" class="btn">
+  </form>
+
+  <script>
+    const maxTasks = 10;
+    const tasksContainer = document.getElementById("tasks-container");
+    const addBtn = document.getElementById("add-task-btn");
+    const totalFormsInpt = document.getElementById("id_task_set-TOTAL_FORMS");
+    const countEle = document.getElementById("task-count");
+    const emptyForm = document.getElementById("empty-form").innerHTML;
+
+    const updateCount = () => {
+      countEle.textContent = totalFormsInpt.value;
+    };
+
+    addBtn.addEventListener("click", () => {
+      const currCount = Number(totalFormsInpt.value)
+
+      if (currCount >= maxTasks) return;
+
+      const newForm = emptyForm.replaceAll("__prefix__", currCount);
+
+      // this method adds the task in the page
+      tasksContainer.insertAdjacentHTML("beforeend", newForm);
+
+      totalFormsInpt.value = currCount + 1;
+
+      updateCount();
+    });
+
+    updateCount();
+  </script>
+
+  {% endblock %}

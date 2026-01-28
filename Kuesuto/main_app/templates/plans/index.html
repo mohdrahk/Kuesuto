@@ -1,8 +1,46 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Plans List</h1>
 
+<h1>My Plans</h1>
 
+<p>
+  <a class="btn" href="{% url 'plans_create' %}">+ Add Plan</a>
+</p>
+
+{% if plans %}
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px;">
+    {% for plan in plans %}
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">
+            <a href="{% url 'plans_detail' plan.id %}">
+              {{ plan.name }}
+            </a>
+          </span>
+
+          <p><strong>Duration:</strong> {{ plan.duration }}</p>
+          <p><strong>Color:</strong> {{ plan.color }}</p>
+
+          <p style="margin-top:12px;">
+            {% if plan.is_completed %}
+              <span class="new badge green" data-badge-caption="completed"></span>
+            {% else %}
+              <span class="new badge grey" data-badge-caption="in progress"></span>
+            {% endif %}
+          </p>
+        </div>
+
+        <div class="card-action">
+          <a href="{% url 'plans_detail' plan.id %}">View</a>
+          <a href="{% url 'plans_update' plan.id %}">Edit</a>
+          <a class="red-text" href="{% url 'plans_delete' plan.id %}">Delete</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No plans yet. Click “Add Plan” to create your first one.</p>
+{% endif %}
 
 {% endblock %}
