@@ -1,8 +1,26 @@
 {% extends "base.html" %}
-{% block title %}Profile Page{% endblock title %}
 {% block content %}
-    <div class="row my-3 p-3">
-        <h1>This is the profile page for {{user.username}}</h1>
+{% load static %}
+    <div class="profile-avatar">
+{% load static %}
+
+        <img src="{% static profile.avatar|cut:'main_app/static/'%}" alt="Avatar" width='150' height='150' />
+    </div>
+    <div class="profile-username">
+        <h1>{{user.username}}</h1>
+
     </div>
 
-{% endblock content %}
+    <div class="profile-score">
+        <p>Score: {{profile.score}}</p>
+    </div>
+
+    <div class="profile-rank">
+        {% if profile.current_rank %}
+            <p>Rank: {{ profile.current_rank }} </p>
+        {% else %}
+            <p>Rank: Unranked </p>
+        {% endif %}
+    </div>
+
+{% endblock %}

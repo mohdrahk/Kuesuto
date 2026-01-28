@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Plan
+from .models import Plan, Profile
 from django.contrib.auth.decorators import login_required
 
 def home(request):
@@ -17,6 +17,7 @@ def plans_detail(request, plan_id):
     plan = Plan.objects.get(id=plan_id)
     return render(request, 'plans/detail.html', { 'plan':plan })
 
-@login_required
-def profile(request):
-    return render(request, 'users/profile.html')
+# @login_required
+def profile_view(request):
+    profile = Profile.objects.get(user=request.user)
+    return render(request, 'profile.html',{'profile':profile, 'user': request.user} )

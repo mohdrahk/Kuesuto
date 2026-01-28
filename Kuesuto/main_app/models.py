@@ -5,25 +5,30 @@ from django.urls import reverse
 
 # Create your models here.
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
+    avatar = models.ImageField(upload_to="main_app/static/profile_images/",  default= "")
     score = models.IntegerField(default=0)
-    current_rank = models.ForeignKey('Rank', on_delete=models.SET_NULL, null=True, blank=True)
+    current_rank = models.ForeignKey(
+        "Rank", on_delete=models.SET_NULL, null=True, blank=True
+    )
 
     def __str__(self):
         return self.user.username
+
 
 class Rank(models.Model):
     name = models.CharField(max_length=50)
     min_score = models.IntegerField(default=0)
     max_score = models.IntegerField()
-    icon = models.ImageField()
+    icon = models.ImageField(upload_to="main_app/static/profile_images/", default="")
     order_position = models.IntegerField()
 
     def __str__(self):
         return self.name
-    
+
+
 class Plan(models.Model):
     name = models.CharField(max_length=100)
     duration = models.CharField(max_length=25)
