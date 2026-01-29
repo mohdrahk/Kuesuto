@@ -1,0 +1,45 @@
+{%  extends "base.html" %}
+{% load static %}
+{% block content %}
+<div>
+    <div>
+        <h1>Profile of {{user.username}} </h1>
+    </div>
+</div>
+
+<div>
+{% if user.profile.avatar %}
+    <img class='Profile' src="{{ user.profile.avatar.url }}" alt="{{ user.username }}">
+{% else %}
+    <p>No Avatar uploaded</p>
+{% endif %}
+
+</div>
+
+<div>
+    <h5>Update Profile Picture</h5>
+    <form method='post' enctype='multipart/form-data'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type='submit' class='btn'>Update Avatar</button>
+    </form>
+</div>
+
+<div>
+    <p><strong>Score:</strong> {{user.profile.score}} </p>
+</div>
+
+<div>
+    <p><strong>Current Rank:</strong>
+        {% if user.profile.current_rank %}
+            {{ user.profile.current_rank.name }}
+        {% else %}
+            Not Assigned Yet
+        {% endif %}
+    </p>
+</div>
+<div>
+    <a href="{% url 'profile_delete' %}" class="btn red">Delete Account </a>
+</div>
+</div>
+{% endblock %}
