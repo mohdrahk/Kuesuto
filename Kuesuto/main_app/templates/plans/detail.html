@@ -58,6 +58,9 @@
               {% if task.is_completed %} Completed {% else %} Not completed {% endif %}
             </p>
           </div>
+          <div class="card-action">
+            <a class="btn" href="{% url 'tasks_detail' task.id %}">View</a>
+            <a class="btn red" href="{% url 'tasks_delete' task.id %}">Delete</a>
         </div>
       {% endfor %}
     </div>
