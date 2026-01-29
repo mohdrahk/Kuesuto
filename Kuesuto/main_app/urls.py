@@ -8,7 +8,7 @@ urlpatterns = [
     # plans CRUD
     path('plans/',views.plans_index, name='plans_index'),
     path('plans/<int:plan_id>/', views.plans_detail, name='plans_detail'),
-    path('profile/', views.profile, name='users-profile'),
+    path('profile/', views.profile, name='users_profile'),
     path('plans/create/', views.PlanCreate.as_view(), name='plans_create'),
     path('plans/<int:pk>/edit/', views.PlanUpdate.as_view(), name='plans_update'),
     path('plans/<int:pk>/delete/', views.PlanDelete.as_view(), name='plans_delete'),

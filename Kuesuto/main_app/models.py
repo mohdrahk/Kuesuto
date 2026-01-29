@@ -7,7 +7,7 @@ from django.urls import reverse
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
+    avatar = models.ImageField(upload_to='main_app/static/uploads/', default="")
     score = models.IntegerField(default=0)
     current_rank = models.ForeignKey('Rank', on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -23,7 +23,7 @@ class Rank(models.Model):
 
     def __str__(self):
         return self.name
-    
+
 class Plan(models.Model):
     name = models.CharField(max_length=100)
     duration = models.CharField(max_length=25)

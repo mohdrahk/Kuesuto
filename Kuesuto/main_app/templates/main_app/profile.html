@@ -1,0 +1,28 @@
+{%  extends "base.html" %}
+{% load static %}
+{% block content %}
+<div>
+    <div>
+        <h1>Profile of {{user.username}} </h1>
+    </div>
+</div>
+
+<div>
+    <img class="Profile" src="{% static user.profile.avatar|cut:'main_app/static/' %}" alt="{{ user.username }}">
+</div>
+
+<div>
+    <p><strong>Score:</strong> {{user.profile.score}} </p>
+</div>
+
+<div>
+    <p><strong>Current Rank:</strong>
+        {% if user.profile.current_rank %}
+            {{ user.profile.current_rank.name }}
+        {% else %}
+            Not Assigned Yet
+        {% endif %}
+    </p>
+</div>
+</div>
+{% endblock %}

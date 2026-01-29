@@ -8,6 +8,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from .forms import PlanForm, TaskFormSet
 
+# @login_required
+
+def profile(request):
+    return render(request, 'main_app/profile.html')
+
 class PlanCreate(CreateView):
     model = Plan
     form_class = PlanForm
@@ -109,9 +114,7 @@ def plans_detail(request, plan_id):
     plan = Plan.objects.get(id=plan_id)
     return render(request, 'plans/detail.html', { 'plan':plan })
 
-@login_required
-def profile(request):
-    return render(request, 'users/profile.html')
+
 
 
 class TaskCreate(LoginRequiredMixin, CreateView):
