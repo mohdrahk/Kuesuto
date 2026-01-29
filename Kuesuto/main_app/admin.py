@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile,Rank, Plan, Task
+from .models import Profile, Plan, Task , Rank
 
 # Register your models here.
 
