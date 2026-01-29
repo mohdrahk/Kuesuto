@@ -8,7 +8,21 @@
 </div>
 
 <div>
-    <img class="Profile" src="{% static user.profile.avatar|cut:'main_app/static/' %}" alt="{{ user.username }}">
+{% if user.profile.avatar %}
+    <img class='Profile' src="{{ user.profile.avatar.url }}" alt="{{ user.username }}">
+{% else %}
+    <p>No Avatar uploaded</p>
+{% endif %}
+
+</div>
+
+<div>
+    <h5>Update Profile Picture</h5>
+    <form method='post' enctype='multipart/form-data'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type='submit' class='btn'>Update Avatar</button>
+    </form>
 </div>
 
 <div>
@@ -23,6 +37,9 @@
             Not Assigned Yet
         {% endif %}
     </p>
+</div>
+<div>
+    <a href="{% url 'profile_delete' %}" class="btn red">Delete Account </a>
 </div>
 </div>
 {% endblock %}

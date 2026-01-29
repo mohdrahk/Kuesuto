@@ -1,17 +1,43 @@
-from django.shortcuts import render
+import os
+from django.conf import settings
+from django.shortcuts import render, redirect
+
 from django.http import HttpResponse
-from .models import Plan, Task
+from .models import Plan, Task, Profile, User
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from .forms import PlanForm, TaskFormSet
+from django.contrib.auth import login
+from .forms import SignupForm
 
 # @login_required
 
+class ProfileUpdate(UpdateView):
+    model = Profile
+    fields = ['avatar']
+    template_name = 'main_app/profile.html'
+    success_url = '/profile/'
+
+    def get_object(self):
+        return self.request.user.profile
+
+class UserDelete(DeleteView):
+    model = User
+    template_name = 'main_app/profile_confirm_delete.html'
+    success_url = '/'
+
+    def get_object(self):
+        return self.request.user
+
+
+
 def profile(request):
     return render(request, 'main_app/profile.html')
+
+
 
 class PlanCreate(CreateView):
     model = Plan
@@ -132,3 +158,27 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
 class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
     success_url = '/'
+
+def signup(request):
+    error_message = ''
+    if request.method == 'POST':
+
+        form = SignupForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = form.save()
+            avatar = form.cleaned_data.get('avatar')
+
+            profile, created = Profile.objects.get_or_create(user=user)
+            if avatar:
+                profile.avatar = avatar
+                profile.save()
+
+            login(request, user)
+            return redirect('plans_index')
+        else:
+            error_message = 'Invalid sign up - try again'
+    else:
+        form = SignupForm()
+
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'registration/signup.html', context)

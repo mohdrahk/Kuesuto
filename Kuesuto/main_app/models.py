@@ -7,7 +7,7 @@ from django.urls import reverse
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='main_app/static/uploads/', default="")
+    avatar = models.ImageField(upload_to='avatars', default="")
     score = models.IntegerField(default=0)
     current_rank = models.ForeignKey('Rank', on_delete=models.SET_NULL, null=True, blank=True)
 
