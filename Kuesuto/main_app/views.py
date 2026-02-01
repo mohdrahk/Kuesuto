@@ -13,8 +13,6 @@ from .forms import PlanForm, TaskFormSet
 from django.contrib.auth import login
 from .forms import SignupForm
 
-# @login_required
-
 class ProfileUpdate(UpdateView):
     model = Profile
     fields = ['avatar']
@@ -135,8 +133,6 @@ def plans_detail(request, plan_id):
     return render(request, 'plans/detail.html', { 'plan':plan })
 
 
-
-
 class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
     fields = ['name', 'duration', 'importance', 'color', 'notes', 'deadline']
@@ -156,9 +152,13 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
     success_url = '/'
 
-class TaskDetail(LoginRequiredMixin, DetailView):
-    model = Task
-    
+@login_required
+def task_toggle_complete(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.is_completed = not task.is_completed
+    task.save()
+    return redirect('plans_detail', plan_id=task.plan.id)
+
 def signup(request):
     error_message = ''
     if request.method == 'POST':
