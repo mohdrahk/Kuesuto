@@ -145,6 +145,9 @@ class TaskCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+class TaskDetail(LoginRequiredMixin, DetailView):
+    model = Task
+
 class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
     fields = ['name', 'duration', 'importance', 'color', 'notes', 'deadline', 'position']

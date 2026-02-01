@@ -69,7 +69,7 @@
           <li>
             <form action="{% url 'logout' %}" method='POST' style='display:inline'>
               {% csrf_token %}
-              <button type='submit' class='btn-flat' >Log Out</button>
+              <button type='submit' class='btn'>Log Out</button>
             </form>
           </li>
           {% else %}

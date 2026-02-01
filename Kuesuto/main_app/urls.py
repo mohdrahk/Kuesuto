@@ -22,9 +22,9 @@ urlpatterns = [
     path('plans/<int:pk>/delete/', views.PlanDelete.as_view(), name='plans_delete'),
 
 
-#     # tasks CRUD
-#     path('tasks/<int:pk>/', views.TaskDetail.as_view(), name='tasks_detail'),
-#     path('tasks/<int:pk>/delete/', views.TaskDelete.as_view(), name='tasks_delete'),
+    # tasks CRUD
+    path('tasks/<int:pk>/', views.TaskDetail.as_view(), name='tasks_detail'),
+    path('tasks/<int:pk>/delete/', views.TaskDelete.as_view(), name='tasks_delete'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
