@@ -35,8 +35,24 @@
 
         <!-- Desktop Menu -->
         <ul class="right hide-on-med-and-down">
+          {% if user.is_authenticated %}
           <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'users_profile' %}">Profile</a></li>
           <li><a href="{% url 'plans_index' %}">View All My Plans</a></li>
+          <li><a href="{% url 'plans_create' %}">Add a plan</a></li>
+          <li>
+            <form action="{% url 'logout' %}" method='POST' style='display:inline'>
+              {% csrf_token %}
+              <button type='submit' class='btn-flat white-text'>Log Out</button>
+            </form>
+          </li>
+          {% else %}
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'login' %}">Log In</a></li>
+          <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          {% endif %}
+          <li>
+
         </ul>
 
       </div>
@@ -45,8 +61,23 @@
 
   <!-- Mobile Menu -->
   <ul class="sidenav" id="mobile">
-    <li><a href="{% url 'about' %}">About</a></li>
-    <li><a href="{% url 'plans_index' %}">View All My Plans</a></li>
+    {% if user.is_authenticated %}
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'users_profile' %}">Profile</a></li>
+          <li><a href="{% url 'plans_index' %}">View All My Plans</a></li>
+          <li><a href="{% url 'plans_create' %}">Add a plan</a></li>
+          <li>
+            <form action="{% url 'logout' %}" method='POST' style='display:inline'>
+              {% csrf_token %}
+              <button type='submit' class='btn'>Log Out</button>
+            </form>
+          </li>
+          {% else %}
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'login' %}">Log In</a></li>
+          <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          {% endif %}
+          <li>
   </ul>
 
   <main class="container">

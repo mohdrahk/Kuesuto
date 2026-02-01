@@ -1,6 +1,76 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>plans Detail</h1>
+
+<div style="display:flex; justify-content:space-between; align-items:center; gap:16px;">
+  <h1>{{ plan.name }}</h1>
+
+  <div style="display:flex; gap:10px;">
+    <a class="btn" href="{% url 'plans_update' plan.id %}">Edit</a>
+    <a class="btn red" href="{% url 'plans_delete' plan.id %}">Delete</a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <p><strong>Duration:</strong> {{ plan.duration }}</p>
+    <p><strong>Color:</strong> {{ plan.color }}</p>
+    <p><strong>Status:</strong>
+      {% if plan.is_completed %}
+        Completed
+      {% else %}
+        In progress
+      {% endif %}
+    </p>
+
+    <p><strong>Created:</strong> {{ plan.created_at }}</p>
+    <p><strong>Updated:</strong> {{ plan.updated_at }}</p>
+  </div>
+</div>
+
+<h4>Tasks</h4>
+
+{% with tasks=plan.task_set.all %}
+  {% if tasks %}
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px;">
+      {% for task in tasks %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              {{ task.position }}. {{ task.name }}
+              {% if task.importance %}
+                <span class="new badge orange" data-badge-caption="important"></span>
+              {% endif %}
+            </span>
+
+            <p><strong>Duration:</strong> {{ task.duration }}</p>
+            <p><strong>Color:</strong> {{ task.color }}</p>
+
+            {% if task.notes %}
+              <p><strong>Notes:</strong> {{ task.notes }}</p>
+            {% endif %}
+
+            {% if task.deadline %}
+              <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+            {% endif %}
+
+            <p><strong>Status:</strong>
+              {% if task.is_completed %} Completed {% else %} Not completed {% endif %}
+            </p>
+          </div>
+          <div class="card-action">
+            <a class="btn" href="{% url 'tasks_detail' task.id %}">View</a>
+            <a class="btn red" href="{% url 'tasks_delete' task.id %}">Delete</a>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No tasks yet.</p>
+  {% endif %}
+{% endwith %}
+
+<p style="margin-top:18px;">
+  <a class="btn grey" href="{% url 'plans_index' %}">Back to Plans</a>
+</p>
 
 {% endblock %}
