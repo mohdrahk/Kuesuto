@@ -75,9 +75,6 @@ class PlanCreate(CreateView):
             task.position = i
             task.save()
 
-        for obj in task_formset.deleted_objects:
-            obj.delete()
-
         self.object = plan
         return super().form_valid(form)
 
@@ -108,9 +105,6 @@ class PlanUpdate(UpdateView):
 
         plan = form.save()
         tasks = task_formset.save(commit=False)
-
-        for objc in task_formset.deleted_objects:
-            objc.delete()
 
         for i, task in enumerate(tasks, start=1):
             task.plan = plan
@@ -172,6 +166,13 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
     success_url = "/"
 
+
+@login_required
+def task_toggle_complete(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.is_completed = not task.is_completed
+    task.save()
+    return redirect('plans_detail', plan_id=task.plan.id)
 
 def signup(request):
     error_message = ""
