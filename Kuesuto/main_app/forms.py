@@ -12,5 +12,4 @@ TaskFormSet = inlineformset_factory(
     Task,
     fields=['name', 'duration', 'importance', 'color', 'notes'],
     extra=1,
-    can_delete=True
 )

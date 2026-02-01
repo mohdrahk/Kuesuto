@@ -42,9 +42,6 @@ class PlanCreate(CreateView):
             task.position = i
             task.save()
 
-        for obj in task_formset.deleted_objects:
-            obj.delete()
-
         self.object = plan
         return super().form_valid(form)
 
@@ -78,9 +75,6 @@ class PlanUpdate(UpdateView):
         plan = form.save()
         tasks = task_formset.save(commit=False)
 
-        for objc in task_formset.deleted_objects:
-            objc.delete()
-
         for i, task in enumerate(tasks, start=1):
             task.plan = plan
             task.position = i
@@ -102,7 +96,7 @@ def about(request):
     return render(request, 'about.html')
 
 def plans_index(request):
-    plans = Plan.objects.filter(user=request.user)
+    plans = Plan.objects.all()
     return render(request, 'plans/index.html', {'plans': plans})
 
 def plans_detail(request, plan_id):

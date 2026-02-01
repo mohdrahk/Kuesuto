@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
 
   {% if object %}
@@ -24,19 +24,103 @@
 
     <div id="tasks-container">
       {% for tform in task_formset %}
-        <div class="card-panel" >
-          <table>
-            {{ tform.as_table }}
-          </table>
+        <div class="task-card">
+          {{ rform.id }}
+
+          <div class="task-card__header">
+            <div class="task-title">Task {{ forloop.counter }} </div>
+
+            <label class="importance-pill">
+              {{ tform.importance }}
+              <span class="importance-pill__ui">
+                <span class="star" >★</span>
+                Important
+              </span>
+            </label>
+          </div>
+
+          <div class="task-grid">
+            <div class="field">
+              <label>{{ tform.name.label }}</label>
+              {{ tform.name }}
+              {% if tform.name.errors %}
+                <div class="err"></div>
+              {% endif %}
+            </div>
+
+            <div class="field">
+              <label>{{ tform.name.label }}</label>
+              {{ tform.name }}
+              {% if tform.name.errors %}
+                <div class="err">{{ tform.name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="field">
+              <label>{{ tform.duration.label }}</label>
+              {{ tform.duration }}
+              {% if tform.duration.errors %}
+                <div class="err">{{ tform.duration.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="field">
+              <label>{{ tform.color.label }}</label>
+              {{ tform.color }}
+              {% if tform.color.errors %}
+                <div class="err">{{ tform.color.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="field field--full">
+              <label>{{ tform.notes.label }}</label>
+              {{ tform.notes }}
+              {% if tform.notes.errors %}
+                <div class="err">{{ tform.notes.errors }}</div>
+              {% endif %}
+            </div>
+          </div>
         </div>
       {% endfor %}
     </div>
 
     <div id="empty-form" style="display: none;">
-      <div class="card-panel">
-        <table>
-          {{ task_formset.empty_form.as_table }}
-        </table>
+      <div class="task-card">
+        {{ task_formset.empty_form.id }}
+
+        <div class="task-card__header">
+          <div class="task-title">New Task</div>
+
+          <label class="importance-pill">
+            {{ task_formset.empty_form.importance }}
+            <span class="importance-pill__ui">
+              <span class="star">★</span>
+              Important
+            </span>
+          </label>
+        </div>
+
+        <div class="task-grid">
+          <div class="field">
+            <label>{{ task_formset.empty_form.name.label }}</label>
+            {{ task_formset.empty_form.name }}
+          </div>
+
+          <div class="field">
+            <label>{{ task_formset.empty_form.duration.label }}</label>
+            {{ task_formset.empty_form.duration }}
+          </div>
+
+          <div class="field">
+            <label>{{ task_formset.empty_form.color.label }}</label>
+            {{ task_formset.empty_form.color }}
+          </div>
+
+          <div class="field field--full">
+            <label>{{ task_formset.empty_form.notes.label }}</label>
+            {{ task_formset.empty_form.notes }}
+          </div>
+        </div>
       </div>
     </div>
 
