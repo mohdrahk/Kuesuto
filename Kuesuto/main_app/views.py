@@ -39,7 +39,7 @@ def profile(request):
 
 
 
-class PlanCreate(CreateView):
+class PlanCreate(LoginRequiredMixin, CreateView):
     model = Plan
     form_class = PlanForm
     template_name = 'main_app/plan_form.html'
@@ -78,7 +78,7 @@ class PlanCreate(CreateView):
 
 
 
-class PlanUpdate(UpdateView):
+class PlanUpdate(LoginRequiredMixin, UpdateView):
     model = Plan
     form_class = PlanForm
     template_name = 'main_app/plan_form.html'
@@ -116,7 +116,7 @@ class PlanUpdate(UpdateView):
 
 
 
-class PlanDelete(DeleteView):
+class PlanDelete(LoginRequiredMixin, DeleteView):
     model = Plan
     success_url = '/plans/'
 
