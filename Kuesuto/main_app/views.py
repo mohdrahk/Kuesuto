@@ -40,3 +40,6 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
 class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
     success_url = '/'
+
+    class TaskDetail(LoginRequiredMixin, DetailView):
+    model = Task
