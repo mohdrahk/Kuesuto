@@ -96,6 +96,29 @@
       M.Sidenav.init(elems);
     });
   </script>
+{% if user.is_authenticated %}
+  <div id="ai-chat-widget">
+    <!-- Chat Bubble Button -->
+    <div id="chat-bubble" onclick="toggleChat()">
+      🤖
+    </div>
 
+    <!-- Chat Window -->
+    <div id="chat-window" style="display: none;">
+      <div id="chat-header">
+        <span>AI Assistant</span>
+        <button onclick="toggleChat()">&times;</button>
+      </div>
+      <div id="chat-messages"></div>
+      <div id="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Ask something...">
+        <button onclick="sendChatMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load AI Chat JavaScript -->
+  <script src="{% static 'js/ai_chat.js' %}"></script>
+  {% endif %}
 </body>
 </html>
