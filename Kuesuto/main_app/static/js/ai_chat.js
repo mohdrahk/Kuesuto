@@ -1,5 +1,5 @@
 // Toggle chat window open/close
-function toggleChat() {
+const toggleChat = () => {
   const chatWindow = document.getElementById('chat-window');
   const chatBubble = document.getElementById('chat-bubble');
 
@@ -10,26 +10,30 @@ function toggleChat() {
     chatWindow.style.display = 'none';
     chatBubble.style.display = 'block';
   }
-}
+};
 
 // Get CSRF token for Django security
-function getCookie(name) {
+const getCookie = (name) => {
   let cookieValue = null;
+
   if (document.cookie && document.cookie !== '') {
     const cookies = document.cookie.split(';');
+
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+
+      if (cookie.substring(0, name.length + 1) === `${name}=`) {
         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
         break;
       }
     }
   }
+
   return cookieValue;
-}
+};
 
 // Send message to AI
-async function sendChatMessage() {
+const sendChatMessage = async () => {
   const input = document.getElementById('chat-input');
   const question = input.value.trim();
 
@@ -51,11 +55,11 @@ async function sendChatMessage() {
         'Content-Type': 'application/json',
         'X-CSRFToken': getCookie('csrftoken')
       },
-      body: JSON.stringify({ question: question })
+      body: JSON.stringify({ question })
     });
 
     const data = await response.json();
-    document.getElementById('loading').remove();
+    document.getElementById('loading')?.remove();
 
     if (data.success) {
       chatMessages.innerHTML += `<div class="ai-msg"><span>${data.answer}</span></div>`;
@@ -65,16 +69,17 @@ async function sendChatMessage() {
 
     chatMessages.scrollTop = chatMessages.scrollHeight;
   } catch (error) {
-    document.getElementById('loading').remove();
+    document.getElementById('loading')?.remove();
     chatMessages.innerHTML += `<div class="ai-msg"><span>Connection error!</span></div>`;
   }
-}
+};
 
 // Handle Enter key press
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   const chatInput = document.getElementById('chat-input');
+
   if (chatInput) {
-    chatInput.addEventListener('keypress', function(e) {
+    chatInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         sendChatMessage();
       }
