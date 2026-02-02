@@ -4,7 +4,6 @@ migrations/
 .env
 
 
-
 # Python cache
 __pycache__/
 *.pyc
@@ -38,6 +37,6 @@ db.sqlite3-journal
 .DS_Store
 Thumbs.db
 
-# Static and Media files (add if needed)
+# Static and Media files 
 # staticfiles/
 # media/
