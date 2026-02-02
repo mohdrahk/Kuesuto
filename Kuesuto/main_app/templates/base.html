@@ -36,6 +36,16 @@
         <!-- Desktop Menu -->
         <ul class="right hide-on-med-and-down">
           {% if user.is_authenticated %}
+          <li>
+            <a href="{% url 'users_profile' %}"class="valign-wrapper">
+              ⭐ Score: <span id="user-score">{{ request.user.profile.score }}</span>
+              {% if request.user.profile.current_rank %}
+                <img src="{{ request.user.profile.current_rank.icon.url }}"
+                      alt="{{ request.user.profile.current_rank.name }}"
+                      class="circle responsive-img rank-icon" style="height:32px; width:32px; margin-left:8px;">
+            {% endif %}
+          </a>
+</li>
           <li><a href="{% url 'about' %}">About</a></li>
           <li><a href="{% url 'users_profile' %}">Profile</a></li>
           <li><a href="{% url 'plans_index' %}">View All My Plans</a></li>
@@ -94,9 +104,18 @@
     document.addEventListener('DOMContentLoaded', function() {
       var elems = document.querySelectorAll('.sidenav');
       M.Sidenav.init(elems);
+      {% if messages %}
+        {% for message in messages %}
+          M.toast({
+            html: '{{ message|escapejs }}',
+            classes: 'purple darken-2',
+            displayLength: 5000
+          });
+        {% endfor %}
+      {% endif %}
     });
   </script>
-{% if user.is_authenticated %}
+  {% if user.is_authenticated %}
   <div id="ai-chat-widget">
     <!-- Chat Bubble Button -->
     <div id="chat-bubble" onclick="toggleChat()">

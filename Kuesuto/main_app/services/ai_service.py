@@ -23,6 +23,7 @@ Rejection message to use:
 Student Info:
 - Username: {user_data.get('username')}
 - Score: {user_data.get('score', 0)}
+- Rank: {user_data.get('rank', 0)}
 - Active Plans: {user_data.get('active_plans', 0)}
 - Active Tasks: {user_data.get('active_tasks', 0)}
 - Completed Tasks: {user_data.get('completed_tasks', 0)}
