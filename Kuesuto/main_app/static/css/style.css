@@ -22,7 +22,6 @@ footer.page-footer {
     max-width: 100px;
     max-height: 100px;
   }
-<<<<<<< HEAD
   /* AI Chat Bubble Styles */
 #chat-bubble {
   position: fixed;
@@ -160,7 +159,6 @@ footer.page-footer {
 #chat-messages::-webkit-scrollbar-thumb {
   background: #ccc;
   border-radius: 3px;
-=======
 
   /* Hide the real checkbox but keep it clickable */
 .importance-pill input[type="checkbox"] {
@@ -210,5 +208,4 @@ footer.page-footer {
 /* Optional hover effect */
 .importance-pill:hover .importance-pill__ui {
   background: #fafafa;
->>>>>>> 4a9f690b99c85e557eb7c4d0e54a344675a0ec64
 }

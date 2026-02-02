@@ -2,6 +2,9 @@
 
 {% block content %}
 
+
+
+
 <div style="display:flex; justify-content:space-between; align-items:center; gap:16px;">
   <h1>{{ task.name }}</h1>
 
@@ -15,7 +18,7 @@
     <p><strong>Position:</strong> {{ task.position }}</p>
     <p><strong>Duration:</strong> {{ task.duration }}</p>
     <p><strong>Color:</strong> {{ task.color }}</p>
-    
+
     <p><strong>Importance:</strong>
       {% if task.importance %}
         <span class="new badge orange" data-badge-caption="important"></span>

@@ -22,7 +22,7 @@ class Rank(models.Model):
     name = models.CharField(max_length=50)
     min_score = models.IntegerField(default=0)
     max_score = models.IntegerField()
-    icon = models.ImageField(upload_to="main_app/static/profile_images/", default="")
+    icon = models.ImageField(upload_to='rank', default="")
     order_position = models.IntegerField()
 
     def __str__(self):

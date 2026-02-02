@@ -14,6 +14,7 @@ from django.db import transaction
 from .forms import PlanForm, TaskFormSet
 from django.contrib.auth import login
 from .forms import SignupForm
+from django.contrib import messages
 
 # @login_required
 
@@ -144,9 +145,9 @@ class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
     fields = ["name", "duration", "importance", "color", "notes", "deadline"]
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     form.instance.user = self.request.user
+    #     return super().form_valid(form)
 
 class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
@@ -164,6 +165,10 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
     ]
 
 
+
+
+
+
 class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
     success_url = "/"
@@ -174,6 +179,22 @@ def task_toggle_complete(request, task_id):
     task = Task.objects.get(id=task_id)
     task.is_completed = not task.is_completed
     task.save()
+
+    profile = request.user.profile
+    all_tasks = task.plan.task_set.all()
+
+    if task.is_completed:
+        profile.score +=10
+
+
+        if all_tasks.filter(is_completed=True).count() == all_tasks.count():
+            profile.score += 30
+            messages.success(request, f'🎉 +10 points! +30 Bonus for completing all tasks! Total: {profile.score}')
+        else:
+            messages.success(request, f'✅ +10 points! Total: {profile.score}')
+        profile.save()
+
+
     return redirect('plans_detail', plan_id=task.plan.id)
 
 def signup(request):
@@ -232,6 +253,7 @@ def ask_ai(request):
         user_data = {
             "username": request.user.username,
             "score": profile.score,
+            "rank": profile.current_rank,
             "active_plans": active_plans_count,
             "active_tasks": active_tasks_count,
             "completed_tasks": Task.objects.filter(
