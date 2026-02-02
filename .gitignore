@@ -1,0 +1,43 @@
+migrations/
+
+#  Environment variables
+.env
+
+
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Database migrations (optional - discuss with team)
+migrations/
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+venv.bak/
+env.bak/
+
+# Django
+db.sqlite3
+db.sqlite3-journal
+*.log
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Static and Media files (add if needed)
+# staticfiles/
+# media/
