@@ -116,6 +116,9 @@ class PlanUpdate(LoginRequiredMixin, UpdateView):
         self.object = plan
         return super().form_valid(form)
 
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+
 
 
 class PlanDelete(LoginRequiredMixin, DeleteView):
