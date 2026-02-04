@@ -1,8 +1,9 @@
 import os
 from django.conf import settings
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 import json
+from django.utils import timezone
 from .services.ai_service import GeminiAIService
 from django.http import JsonResponse
 from .models import Plan, Task, Profile, User
@@ -175,26 +176,33 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
 
 @login_required
 def task_toggle_complete(request, task_id):
-    task = Task.objects.get(id=task_id)
+    task = get_object_or_404(Task, id=task_id, plan__user = request.user)
+
     task.is_completed = not task.is_completed
-    task.save()
+    task.save(update_fields=["is_completed"])
 
     profile = request.user.profile
     all_tasks = task.plan.task_set.all()
 
     if task.is_completed:
-        profile.score +=10
+        profile.score += 10
 
+        if all_tasks.exists() and not all_tasks.filter(is_completed=False).exists():
+            task.plan.is_completed = True
+            task.plan.completed_at = timezone.now()
+            task.plan.save(update_fields=["is_completed", "completed_at"])
 
-        if all_tasks.filter(is_completed=True).count() == all_tasks.count():
             profile.score += 30
-            messages.success(request, f'🎉 +10 points! +30 Bonus for completing all tasks! Total: {profile.score}')
+            messages.success(request, f"🎉 +10 points! +30 Bonus for completing all tasks! Total: {profile.score}")
         else:
-            messages.success(request, f'✅ +10 points! Total: {profile.score}')
+            messages.success(request, f"✅ +10 points! Total: {profile.score}")
+
         profile.save()
-
-
-    return redirect('plans_detail', plan_id=task.plan.id)
+    else:
+        task.plan.is_completed = False
+        task.plan.completed_at = None
+        task.plan.save(update_fields=["is_completed", "completed_at"])
+    return redirect("plans_detail", plan_id=task.plan.id)
 
 def signup(request):
     error_message = ""
