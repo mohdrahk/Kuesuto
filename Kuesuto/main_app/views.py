@@ -5,7 +5,7 @@ from django.views.decorators.http import require_http_methods
 import json
 from .services.ai_service import GeminiAIService
 from django.http import JsonResponse
-from .models import Plan, Task, Profile, User
+from .models import Plan, Task, Profile, User, Rank
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
@@ -192,8 +192,15 @@ def task_toggle_complete(request, task_id):
             messages.success(request, f'🎉 +10 points! +30 Bonus for completing all tasks! Total: {profile.score}')
         else:
             messages.success(request, f'✅ +10 points! Total: {profile.score}')
-        profile.save()
 
+        new_rank = Rank.objects.filter(min_score__lte=profile.score).order_by('-min_score').first()
+        if new_rank and profile.current_rank != new_rank:
+            previous_rank = profile.current_rank
+            profile.current_rank = new_rank
+            profile.save()
+            print("Previous rank:", previous_rank, "New rank:", new_rank)
+            messages.success(request, f'🏆 Congrats! You reached rank "{new_rank.name}"!')
+        profile.save()
 
     return redirect('plans_detail', plan_id=task.plan.id)
 

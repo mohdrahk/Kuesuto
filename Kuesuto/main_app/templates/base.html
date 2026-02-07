@@ -106,6 +106,8 @@
       M.Sidenav.init(elems);
       {% if messages %}
         {% for message in messages %}
+
+
           M.toast({
             html: '{{ message|escapejs }}',
             classes: 'purple darken-2',
