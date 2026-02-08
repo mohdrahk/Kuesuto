@@ -20,7 +20,6 @@ urlpatterns = [
     path('plans/create/', views.PlanCreate.as_view(), name='plans_create'),
     path('plans/<int:pk>/edit/', views.PlanUpdate.as_view(), name='plans_update'),
     path('plans/<int:pk>/delete/', views.PlanDelete.as_view(), name='plans_delete'),
-    path('ai/ask/', views.ask_ai, name='ask_ai'),
 
 
     # tasks CRUD

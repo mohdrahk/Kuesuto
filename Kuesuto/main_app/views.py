@@ -179,6 +179,7 @@ def task_toggle_complete(request, task_id):
     task = Task.objects.get(id=task_id)
     profile = request.user.profile
     all_tasks = task.plan.task_set.all()
+    was_plan_completed = task.plan.is_completed
 
     task.is_completed = not task.is_completed
     task.save()
@@ -203,10 +204,13 @@ def task_toggle_complete(request, task_id):
             profile.score -= 10
             messages_texts.append(f'💀 -10 points! Total: {profile.score}')
 
-            if all_tasks.filter(is_completed=True).count() != all_tasks.count():
-                if profile.score >= 30:
-                    profile.score -= 30
-                    messages_texts.append(f'💀 -30 bonus removed for incomplete tasks! Total: {profile.score}')
+            if was_plan_completed:
+                task.plan.is_completed = False
+                task.plan.completed_at = None
+                task.plan.save(update_fields=['is_completed', 'completed_at'])
+
+                profile.score -= 30
+                messages_texts.append(f'💀 -30 bonus removed (plan no longer complete). Total: {profile.score}')
 
 
 
