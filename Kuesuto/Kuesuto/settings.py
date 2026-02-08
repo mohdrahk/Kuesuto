@@ -125,6 +125,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# ADDED: Required for Django to serve static files properly
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = []  # App directories used by default
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 LOGIN_REDIRECT_URL = '/plans/'
 LOGOUT_REDIRECT_URL = '/'
 MEDIA_URL = '/media/'
