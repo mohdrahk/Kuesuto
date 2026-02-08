@@ -6,7 +6,7 @@ import json
 from django.utils import timezone
 from .services.ai_service import GeminiAIService
 from django.http import JsonResponse
-from .models import Plan, Task, Profile, User
+from .models import Plan, Task, Profile, User, Rank
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
@@ -176,16 +176,21 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
 
 @login_required
 def task_toggle_complete(request, task_id):
-    task = get_object_or_404(Task, id=task_id, plan__user = request.user)
-
-    task.is_completed = not task.is_completed
-    task.save(update_fields=["is_completed"])
-
+    task = Task.objects.get(id=task_id)
     profile = request.user.profile
     all_tasks = task.plan.task_set.all()
 
+    task.is_completed = not task.is_completed
+    task.save()
+
+    messages_texts = []
+
+    old_rank = profile.current_rank
+
+
     if task.is_completed:
-        profile.score += 10
+        profile.score +=10
+        messages_texts.append(f'✅ +10 points! Total: {profile.score}')
 
         if all_tasks.exists() and not all_tasks.filter(is_completed=False).exists():
             task.plan.is_completed = True
@@ -193,16 +198,39 @@ def task_toggle_complete(request, task_id):
             task.plan.save(update_fields=["is_completed", "completed_at"])
 
             profile.score += 30
-            messages.success(request, f"🎉 +10 points! +30 Bonus for completing all tasks! Total: {profile.score}")
-        else:
-            messages.success(request, f"✅ +10 points! Total: {profile.score}")
-
-        profile.save()
+            messages_texts.append(f'🎉 +30 Bonus for completing all tasks! Total: {profile.score}')
     else:
-        task.plan.is_completed = False
-        task.plan.completed_at = None
-        task.plan.save(update_fields=["is_completed", "completed_at"])
-    return redirect("plans_detail", plan_id=task.plan.id)
+            profile.score -= 10
+            messages_texts.append(f'💀 -10 points! Total: {profile.score}')
+
+            if all_tasks.filter(is_completed=True).count() != all_tasks.count():
+                if profile.score >= 30:
+                    profile.score -= 30
+                    messages_texts.append(f'💀 -30 bonus removed for incomplete tasks! Total: {profile.score}')
+
+
+
+
+
+    new_rank = Rank.objects.filter(min_score__lte=profile.score).order_by('-min_score').first()
+    if new_rank != old_rank:
+        profile.current_rank = new_rank
+
+        if old_rank is None or (new_rank and new_rank.min_score > (old_rank.min_score if old_rank else 0)):
+            messages_texts.append(f'🏆 Congrats! You reached rank "{new_rank.name}"!')
+        else:
+            messages_texts.append(f'💀 Rank Down to "{new_rank.name}"!')
+
+
+
+
+    profile.save()
+
+    for msg in messages_texts:
+        messages.success(request, f'{msg}')
+
+
+    return redirect('plans_detail', plan_id=task.plan.id)
 
 def signup(request):
     error_message = ""
