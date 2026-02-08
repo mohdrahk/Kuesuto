@@ -1,7 +1,9 @@
 migrations/
 
-#  Environment variables
+#  Environment variables
 .env
+
+
 
 
 

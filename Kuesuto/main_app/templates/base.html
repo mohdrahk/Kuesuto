@@ -101,6 +101,20 @@
       </span>
     </div>
   </footer>
+  {% if messages %}
+  <script>
+    const djangoMessages = [
+    {% for message in messages %}
+      "{{ message|escapejs }}",
+    {% endfor%}
+
+    ]
+  </script>
+  {% else %}
+  <script>
+    const djangoMessages = []
+  </script>
+  {% endif %}
 
   <!-- Init Sidenav and Toast Messages -->
   <script>
