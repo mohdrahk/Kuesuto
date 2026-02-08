@@ -1,19 +1,19 @@
 // Toggle chat window open/close
-const toggleChat = () => {
+function toggleChat() {
   const chatWindow = document.getElementById('chat-window');
   const chatBubble = document.getElementById('chat-bubble');
 
-  if (chatWindow.style.display === 'none') {
+  if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
     chatWindow.style.display = 'flex';
     chatBubble.style.display = 'none';
   } else {
     chatWindow.style.display = 'none';
     chatBubble.style.display = 'block';
   }
-};
+}
 
 // Get CSRF token for Django security
-const getCookie = (name) => {
+function getCookie(name) {
   let cookieValue = null;
 
   if (document.cookie && document.cookie !== '') {
@@ -30,10 +30,10 @@ const getCookie = (name) => {
   }
 
   return cookieValue;
-};
+}
 
 // Send message to AI
-const sendChatMessage = async () => {
+async function sendChatMessage() {
   const input = document.getElementById('chat-input');
   const question = input.value.trim();
 
@@ -45,7 +45,7 @@ const sendChatMessage = async () => {
   input.value = '';
 
   // Show loading
-  chatMessages.innerHTML += `<div class="ai-msg" id="loading"><span>...</span></div>`;
+  chatMessages.innerHTML += `<div class="ai-msg" id="loading"><span>Thinking...</span></div>`;
   chatMessages.scrollTop = chatMessages.scrollHeight;
 
   try {
@@ -70,9 +70,10 @@ const sendChatMessage = async () => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
   } catch (error) {
     document.getElementById('loading')?.remove();
-    chatMessages.innerHTML += `<div class="ai-msg"><span>Connection error!</span></div>`;
+    chatMessages.innerHTML += `<div class="ai-msg"><span>Connection error! Please try again.</span></div>`;
+    chatMessages.scrollTop = chatMessages.scrollHeight;
   }
-};
+}
 
 // Handle Enter key press
 document.addEventListener('DOMContentLoaded', () => {
@@ -81,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (chatInput) {
     chatInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
+        e.preventDefault();
         sendChatMessage();
       }
     });

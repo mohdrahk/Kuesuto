@@ -1,10 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kuesuto</title>
+  <title>Kuesuto - Quest Management System</title>
 
   <!-- Materialize CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -31,38 +31,38 @@
         </a>
 
         <!-- Logo -->
-        <a href="{% url 'home' %}" class="brand-logo">Kuesuto</a>
+        <a href="{% url 'home' %}" class="brand-logo">🚀 KUESUTO</a>
 
         <!-- Desktop Menu -->
         <ul class="right hide-on-med-and-down">
           {% if user.is_authenticated %}
           <li>
-            <a href="{% url 'users_profile' %}"class="valign-wrapper">
-              ⭐ Score: <span id="user-score">{{ request.user.profile.score }}</span>
+            <a href="{% url 'users_profile' %}" class="valign-wrapper">
+              <span style="margin-right: 5px;">Score:</span>
+              <span id="user-score">{{ request.user.profile.score }}</span>
               {% if request.user.profile.current_rank %}
                 <img src="{{ request.user.profile.current_rank.icon.url }}"
                       alt="{{ request.user.profile.current_rank.name }}"
-                      class="circle responsive-img rank-icon" style="height:32px; width:32px; margin-left:8px;">
-            {% endif %}
-          </a>
-</li>
+                      class="circle responsive-img rank-icon" 
+                      style="height:32px; width:32px; margin-left:8px;">
+              {% endif %}
+            </a>
+          </li>
           <li><a href="{% url 'about' %}">About</a></li>
           <li><a href="{% url 'users_profile' %}">Profile</a></li>
-          <li><a href="{% url 'plans_index' %}">View All My Plans</a></li>
-          <li><a href="{% url 'plans_create' %}">Add a plan</a></li>
+          <li><a href="{% url 'plans_index' %}">My Quests</a></li>
+          <li><a href="{% url 'plans_create' %}">New Quest</a></li>
           <li>
             <form action="{% url 'logout' %}" method='POST' style='display:inline'>
               {% csrf_token %}
-              <button type='submit' class='btn-flat white-text'>Log Out</button>
+              <button type='submit' class='btn-flat white-text'>Logout</button>
             </form>
           </li>
           {% else %}
           <li><a href="{% url 'about' %}">About</a></li>
-          <li><a href="{% url 'login' %}">Log In</a></li>
-          <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+          <li><a href="{% url 'signup' %}">Join Quest</a></li>
           {% endif %}
-          <li>
-
         </ul>
 
       </div>
@@ -72,22 +72,21 @@
   <!-- Mobile Menu -->
   <ul class="sidenav" id="mobile">
     {% if user.is_authenticated %}
-          <li><a href="{% url 'about' %}">About</a></li>
-          <li><a href="{% url 'users_profile' %}">Profile</a></li>
-          <li><a href="{% url 'plans_index' %}">View All My Plans</a></li>
-          <li><a href="{% url 'plans_create' %}">Add a plan</a></li>
-          <li>
-            <form action="{% url 'logout' %}" method='POST' style='display:inline'>
-              {% csrf_token %}
-              <button type='submit' class='btn'>Log Out</button>
-            </form>
-          </li>
-          {% else %}
-          <li><a href="{% url 'about' %}">About</a></li>
-          <li><a href="{% url 'login' %}">Log In</a></li>
-          <li><a href="{% url 'signup' %}">Sign Up</a></li>
-          {% endif %}
-          <li>
+    <li><a href="{% url 'about' %}">About</a></li>
+    <li><a href="{% url 'users_profile' %}">Profile</a></li>
+    <li><a href="{% url 'plans_index' %}">My Quests</a></li>
+    <li><a href="{% url 'plans_create' %}">New Quest</a></li>
+    <li>
+      <form action="{% url 'logout' %}" method='POST' style='display:inline'>
+        {% csrf_token %}
+        <button type='submit' class='btn'>Logout</button>
+      </form>
+    </li>
+    {% else %}
+    <li><a href="{% url 'about' %}">About</a></li>
+    <li><a href="{% url 'login' %}">Login</a></li>
+    <li><a href="{% url 'signup' %}">Join Quest</a></li>
+    {% endif %}
   </ul>
 
   <main class="container">
@@ -96,7 +95,11 @@
   </main>
 
   <footer class="page-footer">
-    <div class="right">All Rights Reserved, &copy; 2026 Kuesuto &nbsp;</div>
+    <div class="right">
+      <span style="font-family: var(--space-font-display); letter-spacing: 0.1em;">
+        QUEST MANAGEMENT SYSTEM &copy; 2026 KUESUTO
+      </span>
+    </div>
   </footer>
   {% if messages %}
   <script>
@@ -113,23 +116,28 @@
   </script>
   {% endif %}
 
-  <!-- Init Sidenav -->
+  <!-- Init Sidenav and Toast Messages -->
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const sidenavs = document.querySelectorAll(".sidenav");
-    M.Sidenav.init(sidenavs);
-
-    djangoMessages.forEach((msg) => {
-      if (!msg) return;
-      M.toast({
-        html: msg,
-        classes: "purple darken-2",
-        displayLength: 5000,
-      });
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize Materialize components
+      var elems = document.querySelectorAll('.sidenav');
+      M.Sidenav.init(elems);
+      
+      // Show toast messages
+      {% if messages %}
+        {% for message in messages %}
+          M.toast({
+            html: '{{ message|escapejs }}',
+            classes: 'purple darken-2',
+            displayLength: 5000
+          });
+        {% endfor %}
+      {% endif %}
     });
-  });
-</script>
+  </script>
+
   {% if user.is_authenticated %}
+  <!-- AI Chat Widget -->
   <div id="ai-chat-widget">
     <!-- Chat Bubble Button -->
     <div id="chat-bubble" onclick="toggleChat()">
@@ -139,12 +147,12 @@
     <!-- Chat Window -->
     <div id="chat-window" style="display: none;">
       <div id="chat-header">
-        <span>AI Assistant</span>
+        <span>Quest Assistant</span>
         <button onclick="toggleChat()">&times;</button>
       </div>
       <div id="chat-messages"></div>
       <div id="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Ask something...">
+        <input type="text" id="chat-input" placeholder="Ask about your quests...">
         <button onclick="sendChatMessage()">Send</button>
       </div>
     </div>
