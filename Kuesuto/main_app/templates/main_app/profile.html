@@ -1,45 +1,191 @@
-{%  extends "base.html" %}
+{% extends "base.html" %}
 {% load static %}
+
 {% block content %}
-<div>
-    <div>
-        <h1>Profile of {{user.username}} </h1>
+
+<div class="profile-page">
+  
+  <!-- Profile Header -->
+  <div class="profile-header">
+    <div class="profile-avatar-section">
+      {% if user.profile.avatar %}
+        <img class="profile-avatar" src="{{ user.profile.avatar.url }}" alt="{{ user.username }}">
+      {% else %}
+        <div class="profile-avatar-placeholder">
+          <span class="avatar-initial">{{ user.username|first|upper }}</span>
+        </div>
+      {% endif %}
+      
+      <div class="profile-info">
+        <h1 class="profile-username">{{ user.username }}</h1>
+        <p class="profile-member-since">Quest Member Since {{ user.date_joined|date:"F Y" }}</p>
+      </div>
     </div>
-</div>
-
-<div>
-{% if user.profile.avatar %}
-    <img class='Profile' src="{{ user.profile.avatar.url }}" alt="{{ user.username }}">
-{% else %}
-    <p>No Avatar uploaded</p>
-{% endif %}
-
-</div>
-
-<div>
-    <h5>Update Profile Picture</h5>
-    <form method='post' enctype='multipart/form-data'>
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type='submit' class='btn'>Update Avatar</button>
-    </form>
-</div>
-
-<div>
-    <p><strong>Score:</strong> {{user.profile.score}} </p>
-</div>
-
-<div>
-    <p><strong>Current Rank:</strong>
-        {% if user.profile.current_rank %}
+    
+    <!-- Profile Stats -->
+    <div class="profile-stats-grid">
+      <div class="profile-stat-card">
+        <div class="stat-value">{{ user.profile.score }}</div>
+        <div class="stat-label">Total Score</div>
+      </div>
+      
+      <div class="profile-stat-card">
+        <div class="stat-value">
+          {% if user.profile.current_rank %}
+            <img src="{{ user.profile.current_rank.icon.url }}" 
+                 alt="{{ user.profile.current_rank.name }}" 
+                 class="profile-rank-icon">
             {{ user.profile.current_rank.name }}
+          {% else %}
+            Novice
+          {% endif %}
+        </div>
+        <div class="stat-label">Current Rank</div>
+      </div>
+      
+      <div class="profile-stat-card">
+        <div class="stat-value">{{ user.plan_set.count }}</div>
+        <div class="stat-label">Total Quests</div>
+      </div>
+      
+      <div class="profile-stat-card">
+        <div class="stat-value">{{ user.plan_set.filter.count }}</div>
+        <div class="stat-label">Active Quests</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Content Grid -->
+  <div class="profile-content-grid">
+    
+    <!-- Update Avatar Card -->
+    <div class="profile-card">
+      <div class="profile-card-header">
+        <h3 class="profile-card-title">🖼️ Update Avatar</h3>
+      </div>
+      <div class="profile-card-content">
+        <form method='post' enctype='multipart/form-data' class="profile-form">
+          {% csrf_token %}
+          
+          <div class="form-field">
+            <label for="id_avatar">Choose New Avatar</label>
+            {{ form.avatar }}
+            {% if form.avatar.errors %}
+              <div class="form-error">{{ form.avatar.errors }}</div>
+            {% endif %}
+          </div>
+          
+          <button type='submit' class='btn btn-large'>
+            <i class="material-icons left">cloud_upload</i>
+            Upload Avatar
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Rank Progress Card -->
+    <div class="profile-card">
+      <div class="profile-card-header">
+        <h3 class="profile-card-title">🏆 Rank Progress</h3>
+      </div>
+      <div class="profile-card-content">
+        {% if user.profile.current_rank %}
+          <div class="rank-display">
+            <img src="{{ user.profile.current_rank.icon.url }}" 
+                 alt="{{ user.profile.current_rank.name }}"
+                 class="rank-icon-large">
+            <div class="rank-info">
+              <h4 class="rank-name">{{ user.profile.current_rank.name }}</h4>
+              <p class="rank-range">
+                {{ user.profile.current_rank.min_score }} - {{ user.profile.current_rank.max_score }} points
+              </p>
+            </div>
+          </div>
+          
+          <div class="rank-progress-bar">
+            <div class="rank-progress-fill" 
+                 style="width: {% widthratio user.profile.score user.profile.current_rank.max_score 100 %}%">
+            </div>
+          </div>
+          
+          <p class="rank-progress-text">
+            {{ user.profile.score }} / {{ user.profile.current_rank.max_score }} points
+          </p>
         {% else %}
-            Not Assigned Yet
+          <div class="rank-empty-state">
+            <span class="rank-empty-icon">🎯</span>
+            <p>Complete quests to earn your first rank!</p>
+          </div>
         {% endif %}
-    </p>
+      </div>
+    </div>
+
+    <!-- Recent Activity Card -->
+    <div class="profile-card profile-card-wide">
+      <div class="profile-card-header">
+        <h3 class="profile-card-title">📋 Recent Quests</h3>
+      </div>
+      <div class="profile-card-content">
+        {% with recent_plans=user.plan_set.all|slice:":5" %}
+          {% if recent_plans %}
+            <div class="recent-quests-list">
+              {% for plan in recent_plans %}
+                <div class="recent-quest-item">
+                  <div class="quest-item-icon">
+                    {% if plan.is_completed %}
+                      <span class="quest-status-icon completed">✓</span>
+                    {% else %}
+                      <span class="quest-status-icon active">⏳</span>
+                    {% endif %}
+                  </div>
+                  <div class="quest-item-info">
+                    <a href="{% url 'plans_detail' plan.id %}" class="quest-item-name">
+                      {{ plan.name }}
+                    </a>
+                    <span class="quest-item-meta">
+                      {{ plan.task_set.filter.count }} / {{ plan.task_set.count }} tasks completed
+                    </span>
+                  </div>
+                  <div class="quest-item-actions">
+                    <a href="{% url 'plans_detail' plan.id %}" class="btn-small">View</a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            
+            <div class="profile-card-footer">
+              <a href="{% url 'plans_index' %}" class="btn">View All Quests</a>
+            </div>
+          {% else %}
+            <div class="empty-state">
+              <span class="empty-state-icon">📋</span>
+              <p>No quests yet. Start your first quest!</p>
+              <a href="{% url 'plans_create' %}" class="btn">Create Quest</a>
+            </div>
+          {% endif %}
+        {% endwith %}
+      </div>
+    </div>
+
+    <!-- Danger Zone Card -->
+    <div class="profile-card danger-card">
+      <div class="profile-card-header">
+        <h3 class="profile-card-title">⚠️ Danger Zone</h3>
+      </div>
+      <div class="profile-card-content">
+        <p class="danger-warning">
+          Deleting your account is permanent and cannot be undone. All your quests, tasks, and progress will be lost forever.
+        </p>
+        <a href="{% url 'profile_delete' %}" class="btn red btn-large">
+          <i class="material-icons left">delete_forever</i>
+          Delete Account
+        </a>
+      </div>
+    </div>
+
+  </div>
+
 </div>
-<div>
-    <a href="{% url 'profile_delete' %}" class="btn red">Delete Account </a>
-</div>
-</div>
+
+
 {% endblock %}
