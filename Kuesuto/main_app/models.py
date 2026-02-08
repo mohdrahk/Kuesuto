@@ -2,6 +2,7 @@ from django.db import models
 from datetime import date
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils import timezone
 
 # Create your models here.
 
@@ -43,6 +44,13 @@ class Plan(models.Model):
 
     def get_absolute_url(self):
         return reverse("plans_detail", kwargs={"plan_id": self.id})
+
+    def refresh_completion_status(self):
+        all_done = self.task_set.exists() and not self.task_set.filter(is_completed=False).exists()
+
+        self.is_completed = all_done
+        self.completed_at = timezone.now() if all_done else None
+        self.save(update_fields=["is_completed", "completed_at"])
 
 
 class Task(models.Model):

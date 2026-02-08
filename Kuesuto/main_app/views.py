@@ -1,8 +1,9 @@
 import os
 from django.conf import settings
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 import json
+from django.utils import timezone
 from .services.ai_service import GeminiAIService
 from django.http import JsonResponse
 from .models import Plan, Task, Profile, User, Rank
@@ -116,6 +117,9 @@ class PlanUpdate(LoginRequiredMixin, UpdateView):
         self.object = plan
         return super().form_valid(form)
 
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+
 
 
 class PlanDelete(LoginRequiredMixin, DeleteView):
@@ -145,9 +149,9 @@ class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
     fields = ["name", "duration", "importance", "color", "notes", "deadline"]
 
-    # def form_valid(self, form):
-    #     form.instance.user = self.request.user
-    #     return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
@@ -163,10 +167,6 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
         "deadline",
         "position",
     ]
-
-
-
-
 
 
 class TaskDelete(LoginRequiredMixin, DeleteView):
@@ -192,8 +192,11 @@ def task_toggle_complete(request, task_id):
         profile.score +=10
         messages_texts.append(f'✅ +10 points! Total: {profile.score}')
 
+        if all_tasks.exists() and not all_tasks.filter(is_completed=False).exists():
+            task.plan.is_completed = True
+            task.plan.completed_at = timezone.now()
+            task.plan.save(update_fields=["is_completed", "completed_at"])
 
-        if all_tasks.filter(is_completed=True).count() == all_tasks.count():
             profile.score += 30
             messages_texts.append(f'🎉 +30 Bonus for completing all tasks! Total: {profile.score}')
     else:

@@ -27,7 +27,7 @@
     <div id="tasks-container">
       {% for tform in task_formset %}
         <div class="task-card">
-          {{ rform.id }}
+          {{ tform.id }}
 
           <div class="task-card__header">
             <div class="task-title">Task {{ forloop.counter }} </div>
@@ -46,7 +46,7 @@
               <label>{{ tform.name.label }}</label>
               {{ tform.name }}
               {% if tform.name.errors %}
-                <div class="err"></div>
+                <div class="err">{{ tform.name.errors }}</div>
               {% endif %}
             </div>
 
@@ -78,6 +78,8 @@
       {% endfor %}
     </div>
 
+    <br>
+    <br>
     <div id="empty-form" style="display: none;">
       <div class="task-card">
         {{ task_formset.empty_form.id }}
