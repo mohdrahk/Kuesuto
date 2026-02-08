@@ -101,6 +101,22 @@
 
   <!-- Init Sidenav -->
   <script>
+<<<<<<< HEAD
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      M.Sidenav.init(elems);
+      {% if messages %}
+        {% for message in messages %}
+
+
+          M.toast({
+            html: '{{ message|escapejs }}',
+            classes: 'purple darken-2',
+            displayLength: 5000
+          });
+        {% endfor %}
+      {% endif %}
+=======
   document.addEventListener("DOMContentLoaded", () => {
     const sidenavs = document.querySelectorAll(".sidenav");
     M.Sidenav.init(sidenavs);
@@ -112,6 +128,7 @@
         classes: "purple darken-2",
         displayLength: 5000,
       });
+>>>>>>> 2998f60d05fa60e49fcb3df88b9eebd4553bb59b
     });
   });
 </script>
