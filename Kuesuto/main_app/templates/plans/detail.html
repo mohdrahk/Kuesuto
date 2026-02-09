@@ -28,7 +28,7 @@
       <h1 style="font-size:3rem; margin:0 0 15px 0;">{{ plan.name|upper }}</h1>
       <p style="margin:0; font-size:1.1rem; color:var(--space-text-secondary);">
         <strong>DURATION:</strong> {{ plan.duration }} • 
-        <strong>{{ plan.task_set.filter.count }} / {{ plan.task_set.count }} TASKS COMPLETE</strong>
+        <strong>{{ plan.completed_task_count }} / {{ plan.task_set.count }} TASKS COMPLETE</strong>
       </p>
     </div>
     
@@ -41,19 +41,13 @@
     <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.9rem;">
       <span>QUEST PROGRESS</span>
       <span style="color:var(--neon-green); font-weight:700;">
-        {% if plan.task_set.count > 0 %}
-          {% widthratio plan.task_set.filter.count plan.task_set.count 100 %}% COMPLETE
-        {% else %}
-          0% COMPLETE
-        {% endif %}
+        {{ plan.completion_percentage }}% COMPLETE
       </span>
     </div>
     <div style="width:100%; height:30px; background:var(--space-bg-tertiary); border:2px solid var(--neon-purple); border-radius:15px; overflow:hidden;">
-      <div style="height:100%; background:linear-gradient(90deg, var(--neon-green), var(--neon-cyan)); width:{% widthratio plan.task_set.filter.count plan.task_set.count 100 %}%; transition:width 0.5s; display:flex; align-items:center; justify-content:center; box-shadow:0 0 20px rgba(16, 185, 129, 0.6);">
+      <div style="height:100%; background:linear-gradient(90deg, var(--neon-green), var(--neon-cyan)); width:{{ plan.completion_percentage }}%; transition:width 0.5s; display:flex; align-items:center; justify-content:center; box-shadow:0 0 20px rgba(16, 185, 129, 0.6);">
         <span style="color:white; font-weight:900; font-size:0.9rem;">
-          {% if plan.task_set.count > 0 %}
-            {% widthratio plan.task_set.filter.count plan.task_set.count 100 %}%
-          {% endif %}
+          {{ plan.completion_percentage }}%
         </span>
       </div>
     </div>
@@ -71,7 +65,7 @@
   </div>
 </div>
 
-<!-- Tasks Horizontal Flow - FIXED -->
+<!-- Tasks Horizontal Flow -->
 {% with tasks=plan.task_set.all %}
   {% if tasks %}
     <!-- Horizontal Scroll Container -->
@@ -148,11 +142,6 @@
               </div>
             </div>
           </div>
-
-          <!-- Connector Line Below (if not last) -->
-          {% if not forloop.last %}
-            <div style="width:40px; height:0; border-top:3px solid var(--neon-cyan); margin-top:-50%; position:absolute; right:-40px; top:50%; display:none;"></div>
-          {% endif %}
         </div>
 
       {% endfor %}
@@ -180,14 +169,7 @@
     <div style="flex:1;">
       <h2 style="margin:0 0 10px; font-size:1.8rem;">QUEST REWARDS</h2>
       <p style="margin:0; font-size:1.1rem;">
-        COMPLETE ALL TASKS TO EARN 
-        <span style="color:var(--neon-green); font-weight:900; font-size:1.3rem;">{{ plan.task_set.count|add:"0" }} XP</span>
-        {% with important_count=plan.task_set.filter.count %}
-          {% if important_count > 0 %}
-            + <span style="color:var(--neon-orange); font-weight:900; font-size:1.3rem;">{{ important_count|add:"0" }} BONUS XP</span>
-            (PRIORITY TASKS)
-          {% endif %}
-        {% endwith %}
+        COMPLETE ALL TASKS TO EARN 10 POINTS</span>
       </p>
     </div>
   </div>
