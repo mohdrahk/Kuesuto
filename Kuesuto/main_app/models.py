@@ -53,6 +53,16 @@ class Plan(models.Model):
         self.completed_at = timezone.now() if all_done else None
         self.save(update_fields=["is_completed", "completed_at"])
 
+    def completed_task_count(self):
+        return self.task_set.filter(is_completed=True).count()
+
+    def completion_percentage(self):
+        total = self.task_set.count()
+        if total == 0:
+            return 0
+        completed = self.completed_task_count()
+        return int((completed / total) * 100)
+
 
 class Task(models.Model):
     name = models.CharField(max_length=200)
