@@ -3,12 +3,18 @@ function toggleChat() {
   const chatWindow = document.getElementById('chat-window');
   const chatBubble = document.getElementById('chat-bubble');
 
-  if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
-    chatWindow.style.display = 'flex';
-    chatBubble.style.display = 'none';
+  if (chatWindow.classList.contains('visible')) {
+    // Close
+    chatWindow.classList.remove('visible');
+    chatWindow.classList.add('hidden');
+    chatBubble.classList.remove('hidden');
+    chatBubble.classList.add('visible');
   } else {
-    chatWindow.style.display = 'none';
-    chatBubble.style.display = 'block';
+    // Open
+    chatWindow.classList.remove('hidden');
+    chatWindow.classList.add('visible');
+    chatBubble.classList.remove('visible');
+    chatBubble.classList.add('hidden');
   }
 }
 
