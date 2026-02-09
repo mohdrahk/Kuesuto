@@ -19,6 +19,7 @@ class Profile(models.Model):
         return self.user.username
 
 
+
 class Rank(models.Model):
     name = models.CharField(max_length=50)
     min_score = models.IntegerField(default=0)
