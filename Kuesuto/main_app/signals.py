@@ -43,3 +43,13 @@ def track_task_completion(sender, instance, **kwargs):
 
 @receiver(post_migrate)
 def create_default_ranks(sender, **kwargs):
+    if sender.name == 'main_app':
+        ranks = [
+            {'name': 'Bronze', 'min_score': 0, 'max_score': 99, 'order_position': 1, 'icon': 'rank/bronze.jpg'},
+            {'name': 'Silver', 'min_score': 100, 'max_score': 299, 'order_position': 2, 'icon': 'rank/silver.jpg'},
+            {'name': 'Gold', 'min_score': 300, 'max_score': 599, 'order_position': 3, 'icon': 'rank/gold.jpg'},
+            {'name': 'Platinum', 'min_score': 600, 'max_score': 999, 'order_position': 4, 'icon': 'rank/platinum.jpg'},
+            {'name': 'Emeralds', 'min_score': 1000, 'max_score': 1999, 'order_position': 5, 'icon': 'rank/emeralds.jpg'},
+            {'name': 'Diamond', 'min_score': 2000, 'max_score': 999999, 'order_position': 6, 'icon': 'rank/diamond.jpg'},
+        ]
+
