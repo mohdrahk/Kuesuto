@@ -52,4 +52,7 @@ def create_default_ranks(sender, **kwargs):
             {'name': 'Emeralds', 'min_score': 1000, 'max_score': 1999, 'order_position': 5, 'icon': 'rank/emeralds.jpg'},
             {'name': 'Diamond', 'min_score': 2000, 'max_score': 999999, 'order_position': 6, 'icon': 'rank/diamond.jpg'},
         ]
+        for rank_data in ranks:
+            Rank.objects.get_or_create(name=rank_data['name'], defaults=rank_data)
+
 
