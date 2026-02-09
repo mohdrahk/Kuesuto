@@ -11,10 +11,10 @@
 {% if plans %}
   <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px;">
     {% for plan in plans %}
-      <div class="card" style="border: 3px solid {{ plan.color }}; border-radius: 12px; ">
+      <div class="card" style="border: 3px solid {{ plan.color }} !important; border-radius: 12px; ">
         <div class="card-content">
           <span class="card-title">
-            <a href="{% url 'plans_detail' plan.id %}" style="color: {{plan.color}}; font-weight:700; ">
+            <a href="{% url 'plans_detail' plan.id %}" style="color: {{plan.color}} !important; font-weight:700; ">
               {{ plan.name }}
             </a>
           </span>
@@ -31,7 +31,7 @@
           </p>
         </div>
 
-        <div class="card-action">
+        <div class="card-action" style="border-top: 2px solid {{ plan.color }} !important; ">
           <a href="{% url 'plans_detail' plan.id %}">View</a>
           <a href="{% url 'plans_update' plan.id %}">Edit</a>
           <a class="red-text" href="{% url 'plans_delete' plan.id %}">Delete</a>
