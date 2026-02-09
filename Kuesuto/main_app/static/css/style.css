@@ -450,10 +450,26 @@ footer.page-footer {
   background: var(--space-bg-secondary) !important;
   border: 3px solid var(--neon-purple) !important;
   border-radius: 20px !important;
-  display: flex !important;
   flex-direction: column !important;
   z-index: 1000 !important;
   box-shadow: 0 0 30px rgba(168, 85, 247, 0.6) !important;
+}
+
+
+#chat-window.hidden {
+  display: none !important;
+}
+
+#chat-window.visible {
+  display: flex !important;
+}
+
+#chat-bubble.hidden {
+  display: none !important;
+}
+
+#chat-bubble.visible {
+  display: block !important;
 }
 
 #chat-header {
