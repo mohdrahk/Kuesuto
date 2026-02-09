@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, post_migrate
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.utils import timezone
@@ -40,3 +40,6 @@ def track_task_completion(sender, instance, **kwargs):
                 profile.save()
         except Task.DoesNotExist:
             pass
+
+@receiver(post_migrate)
+def create_default_ranks(sender, **kwargs):
