@@ -11,8 +11,15 @@
 {% if plans %}
   <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px;">
     {% for plan in plans %}
-      <div class="card" style="border: 3px solid {{ plan.color }} !important; border-radius: 12px; ">
-        <div class="card-content">
+      <div class="card" style="border: 3px solid {{ plan.color }} !important; border-radius: 12px; postion: relative;">
+        <div style="position:absolute; top: 10px; right: 10px; z-index:2; filter: drop-shadow(0 0 6px rgba(0,0,0,0.6));">
+          {% if plan.is_completed %}
+            <span class="new badge green"  data-badge-caption="completed"></span>
+          {% else %}
+            <span class="new badge grey" data-badge-caption="in progress"></span>
+          {% endif %}
+        </div>
+        <div class="card-content" style="padding-top: 36px !important;">
           <span class="card-title">
             <a href="{% url 'plans_detail' plan.id %}" style="color: {{plan.color}} !important; font-weight:700; ">
               {{ plan.name }}
@@ -21,14 +28,6 @@
 
           <p><strong>Duration:</strong> {{ plan.duration }}</p>
           <p><strong>Color:</strong> {{ plan.color }}</p>
-
-          <p style="margin-top:12px;">
-            {% if plan.is_completed %}
-              <span class="new badge green" data-badge-caption="completed"></span>
-            {% else %}
-              <span class="new badge grey" data-badge-caption="in progress"></span>
-            {% endif %}
-          </p>
         </div>
 
         <div class="card-action" style="border-top: 2px solid {{ plan.color }} !important; ">
