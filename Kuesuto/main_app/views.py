@@ -155,19 +155,12 @@ class TaskCreate(LoginRequiredMixin, CreateView):
 
 class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
+    
 
 class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
-    fields = [
-        "name",
-        "duration",
-        "importance",
-        "color",
-        "notes",
-        "deadline",
-        "position",
-    ]
-
+    fields = ["name", "duration", "importance", "color", "notes", "deadline"]  
+    success_url = '/plans/'
 
 class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
