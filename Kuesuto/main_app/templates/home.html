@@ -3,23 +3,23 @@
 {% block content %}
 
 <!-- Full-Width Hero Video Banner -->
-<div style="position: relative; width:100%; margin: -20px -20px 60px -20px; overflow: hidden; height: 600px;">
+<div style="position: relative; width: 100vw; margin-left: calc(-50vw + 50%); margin-right: calc(-50vw + 50%); margin-bottom: 60px; overflow: hidden; height: 600px;">
   
   <!-- Video Background -->
-  <video autoplay loop muted playsinline style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
+  <video autoplay loop muted playsinline style="position: absolute; width: 100%; height: 100%; object-fit: fit; background-color: #75DBF8;">
     <source src="{% static 'images/hero-banner.webm' %}" type="video/webm">
     <img src="{% static 'images/hero-banner.png' %}" alt="Kuesuto" style="width: 100%; height: 100%; object-fit: cover;">
   </video>
   
   <!-- White Text with Shadow Overlay -->
-<div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); z-index: 10; max-width: 900px;">
-  <h1 class="hero-video-text">
-    FINISH TASKS
-  </h1>
-  <h1 class="hero-video-text" style="margin-top: 10px;">
-    AND LEVEL UP
-  </h1>
-</div>
+  <div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); z-index: 10; max-width: 900px;">
+    <h1 class="hero-video-text">
+      FINISH TASKS
+    </h1>
+    <h1 class="hero-video-text" style="margin-top: 10px;">
+      AND LEVEL UP
+    </h1>
+  </div>
 </div>
 
 <!-- Hero Section -->
