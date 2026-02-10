@@ -90,8 +90,14 @@ Personalize quests with colors and themes to make every mission feel unique.
 [![Django Auth](https://img.shields.io/badge/Django%20Auth-092E20?logo=django&logoColor=white&style=flat-square)](https://docs.djangoproject.com/en/4.2/topics/auth/)
 
 ---
+## 🔮 Future Enhancements
 
-
+| Feature | Description |
+|---------|-------------|
+| 🎭 Avatar Rewards | Unlock new avatar props or accessories as you complete quests. |
+| 🤝 Social Quests | Share quests with friends and collaborate on challenges. |
+| 📊 Quest Analytics Dashboard | Give users detailed insights into their productivity patterns, streaks, and top-performing quest types to help them improve. |
+---
 
 
 
