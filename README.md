@@ -1,4 +1,4 @@
-![logo](Kuesuto\main_app\static\images\kuesto-logo.png)
+![logo](Kuesuto/main_app/static/images/kuesto-logo.png)
 
 ## Kuesuto
 
@@ -51,23 +51,23 @@ Personalize quests with colors and themes to make every mission feel unique.
 
 **Home Page**
 
-![home](Kuesuto\main_app\static\images\home.png)
+![home](Kuesuto/main_app/static/images/home.png)
 
 **Quest Page**
 
-![quest](Kuesuto\main_app\static\images\quest.png)
+![quest](Kuesuto/main_app/static/images/quest.png)
 
 **My Quest**
 
-![my-quest](Kuesuto\main_app\static\images\my-quest.png)
+![my-quest](Kuesuto/main_app/static/images/my-quest.png)
 
 **AI Assistant**
 
-![Ai](Kuesuto\main_app\static\images\ai.png)
+![Ai](Kuesuto/main_app/static/images/ai.png)
 
 **Profile**
 
-![profile](Kuesuto\main_app\static\images\profile.png)
+![profile](Kuesuto/main_app/static/images/profile.png)
 
 ---
 ## 🛠 Tech Stack
