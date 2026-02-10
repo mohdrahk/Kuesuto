@@ -1542,3 +1542,97 @@ hr {
     width: 100% !important;
   }
 }
+
+
+/* ============================================
+   CLICKABLE TASK STATUS ICON (PLAN DETAIL)
+   ============================================ */
+
+.status-toggle-form {
+  margin: 0 0 22px 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.status-toggle-btn {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  border-radius: 9999px !important;
+  line-height: 0 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+}
+
+.status-toggle-btn:hover,
+.status-toggle-btn:focus,
+.status-toggle-btn:active {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.status-circle {
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 9999px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+}
+
+.status-circle i {
+  font-size: 2.5rem !important;
+  color: white !important;
+}
+
+/* DONE (green filled) */
+.status-circle.is-done {
+  background: var(--neon-green) !important;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.55) !important;
+}
+
+/* ACTIVE (outlined) */
+.status-circle.is-active {
+  background: transparent !important;
+  border: 3px solid var(--space-text-secondary) !important;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.35) !important;
+}
+
+.status-toggle-btn:hover .status-circle {
+  transform: scale(1.06) !important;
+}
+
+.status-toggle-btn:hover .status-circle.is-active {
+  border-color: var(--neon-cyan) !important;
+}
+
+.status-toggle-btn:focus-visible .status-circle {
+  outline: 3px solid var(--neon-cyan) !important;
+  outline-offset: 6px !important;
+}
+
+.status-toggle-form button.status-toggle-btn[type="submit"] {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  border-radius: 9999px !important;
+  min-height: 0 !important;
+  height: auto !important;
+  line-height: 0 !important;
+}
+
+.status-toggle-form button.status-toggle-btn[type="submit"]:hover,
+.status-toggle-form button.status-toggle-btn[type="submit"]:active,
+.status-toggle-form button.status-toggle-btn[type="submit"]:focus {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
