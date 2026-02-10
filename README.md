@@ -106,6 +106,13 @@ Personalize quests with colors and themes to make every mission feel unique.
 [![Shields.io](https://img.shields.io/badge/Shields.io-4ABDF3?logo=shields.io&logoColor=white&style=flat-square)](https://shields.io/)
 [![Material Icons](https://img.shields.io/badge/Material%20Icons-607D8B?logo=materialdesign&logoColor=white&style=flat-square)](https://material.io/resources/icons/)
 
+---
+## 🏆 Thank You, Adventurer!
+
+Thank you for joining the Kuesuto adventure!
+May your quests be rewarding, your Scores plentiful, and your productivity legendary.
+
+⚔️ Keep questing
 
 
 
