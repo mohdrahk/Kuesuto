@@ -261,8 +261,8 @@ def signup(request):
     return render(request, "registration/signup.html", context)
 
 
-# @login_required
-# @require_http_methods(["POST"])
+@login_required
+@require_http_methods(["POST"])
 def ask_ai(request):
     try:
         data = json.loads(request.body)
@@ -286,13 +286,19 @@ def ask_ai(request):
         # NOW get only 5 plans for the data
         recent_plans = all_plans[:5]
         plans_data = [
-            {"name": p.name, "completed": p.is_completed} for p in recent_plans
+            {
+                "name": p.name,
+                "completed": p.is_completed,
+                "tasks_total": p.task_set.count(),
+                "tasks_done": p.task_set.filter(is_completed=True).count
+            }
+            for p in recent_plans
         ]
 
         user_data = {
             "username": request.user.username,
             "score": profile.score,
-            "rank": profile.current_rank,
+            "rank": profile.current_rank.name if profile.current_rank else "Novice",
             "active_plans": active_plans_count,
             "active_tasks": active_tasks_count,
             "completed_tasks": Task.objects.filter(
@@ -307,4 +313,5 @@ def ask_ai(request):
         return JsonResponse({"success": True, "answer": answer})
 
     except Exception as e:
+        print(f"AI Error: {str(e)}")
         return JsonResponse({"success": False, "error": str(e)}, status=500)
