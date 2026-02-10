@@ -11,7 +11,7 @@ At its core, Kuesuto blends **smart tracking**, **AI-powered guidance**, and a *
 Kuesuto is designed to make achievement feel exciting—not exhausting.
 
 ---
-## Background
+## Our Story
 
 Many productivity tools focus on tasks but fail to keep users motivated. Over time, goals feel repetitive and progress becomes hard to notice.
 
