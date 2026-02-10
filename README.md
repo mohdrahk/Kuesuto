@@ -47,6 +47,31 @@ Personalize quests with colors and themes to make every mission feel unique.
 
 
 ---
+## Final Product
+
+**Home Page**
+
+![home](Kuesuto\main_app\static\images\home.png)
+
+**Quest Page**
+
+![quest](Kuesuto\main_app\static\images\quest.png)
+
+**My Quest**
+
+![my-quest](Kuesuto\main_app\static\images\my-quest.png)
+
+**AI Assistant**
+
+![Ai](Kuesuto\main_app\static\images\ai.png)
+
+**Profile**
+
+![profile](Kuesuto\main_app\static\images\profile.png)
+
+---
+
+
 
 
 
