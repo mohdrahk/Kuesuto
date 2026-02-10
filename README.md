@@ -99,6 +99,14 @@ Personalize quests with colors and themes to make every mission feel unique.
 | 📊 Quest Analytics Dashboard | Give users detailed insights into their productivity patterns, streaks, and top-performing quest types to help them improve. |
 ---
 
+## 📝 Attributions
+
+[![Django](https://img.shields.io/badge/Django-092E20?logo=django&logoColor=white&style=flat-square)](https://www.djangoproject.com/)
+[![Materialize CSS](https://img.shields.io/badge/Materialize-C2185B?logo=materialdesign&logoColor=white&style=flat-square)](https://materializecss.com/)
+[![Shields.io](https://img.shields.io/badge/Shields.io-4ABDF3?logo=shields.io&logoColor=white&style=flat-square)](https://shields.io/)
+[![Material Icons](https://img.shields.io/badge/Material%20Icons-607D8B?logo=materialdesign&logoColor=white&style=flat-square)](https://material.io/resources/icons/)
+
+
 
 
 
