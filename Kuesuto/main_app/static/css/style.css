@@ -200,6 +200,21 @@ input[type="submit"]:hover {
   box-shadow: 0 0 20px rgba(168, 85, 247, 0.4) !important;
 }
 
+.card.task-card {
+  border: 4px solid var(--task-color) !important;
+  box-shadow: 0 0 22px color-mix(in srgb, var(--task-color) 45%, transparent) !important;
+}
+
+.card.task-card:hover {
+  border-color: var(--task-color) !important;
+  box-shadow: 0 0 30px color-mix(in srgb, var(--task-color) 65%, transparent) !important;
+}
+
+.card.task-card.task-completed {
+  opacity: 0.75 !important;
+}
+
+
 .card:hover {
   border-color: var(--neon-cyan) !important;
   box-shadow: 0 0 30px rgba(6, 182, 212, 0.6) !important;

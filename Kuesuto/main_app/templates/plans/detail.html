@@ -91,7 +91,7 @@
 
 
           <!-- Task Card -->
-          <div class="card {% if task.is_completed %}task-completed{% endif %}" style="border:3px solid {{ task.color }}; margin:0; width:100%;">
+          <div class="card task-card {% if task.is_completed %}task-completed{% endif %}" style="border:3px solid {{ task.color }}; margin:0; width:100%; --task-color: {{ task.color }}">
             <div class="card-content">
 
               <!-- Title & Star -->
