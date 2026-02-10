@@ -450,10 +450,26 @@ footer.page-footer {
   background: var(--space-bg-secondary) !important;
   border: 3px solid var(--neon-purple) !important;
   border-radius: 20px !important;
-  display: flex !important;
   flex-direction: column !important;
   z-index: 1000 !important;
   box-shadow: 0 0 30px rgba(168, 85, 247, 0.6) !important;
+}
+
+
+#chat-window.hidden {
+  display: none !important;
+}
+
+#chat-window.visible {
+  display: flex !important;
+}
+
+#chat-bubble.hidden {
+  display: none !important;
+}
+
+#chat-bubble.visible {
+  display: block !important;
 }
 
 #chat-header {
@@ -1419,5 +1435,57 @@ hr {
   .recent-quest-item {
     flex-direction: column !important;
     text-align: center !important;
+  }
+}
+
+/* ============================================
+   HORIZONTAL TASK LAYOUT - MINIMAL CSS
+   Uses existing design system, only adds layout
+   ============================================ */
+
+/* Tasks Horizontal Container */
+.tasks-horizontal-container {
+  display: flex !important;
+  gap: 30px !important;
+  overflow-x: auto !important;
+  padding: 20px 0 !important;
+  margin: 40px 0 !important;
+}
+
+/* Individual Task Item */
+.task-horizontal-item {
+  flex: 0 0 auto !important;
+  width: 300px !important;
+  min-width: 280px !important;
+}
+
+/* Scrollbar Styling for Horizontal Scroll */
+.tasks-horizontal-container::-webkit-scrollbar {
+  height: 8px !important;
+}
+
+.tasks-horizontal-container::-webkit-scrollbar-track {
+  background: var(--space-bg-tertiary) !important;
+  border-radius: 10px !important;
+}
+
+.tasks-horizontal-container::-webkit-scrollbar-thumb {
+  background: var(--neon-purple) !important;
+  border-radius: 10px !important;
+}
+
+.tasks-horizontal-container::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-cyan) !important;
+}
+
+/* Mobile: Stack Vertically */
+@media (max-width: 768px) {
+  .tasks-horizontal-container {
+    flex-direction: column !important;
+    overflow-x: visible !important;
+  }
+  
+  .task-horizontal-item {
+    width: 100% !important;
   }
 }

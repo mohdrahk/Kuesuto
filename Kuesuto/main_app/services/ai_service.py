@@ -1,11 +1,13 @@
-from google import genai
+import google.generativeai as genai
 from django.conf import settings
 import json
 
 
 class GeminiAIService:
     def __init__(self):
-        self.client = genai.Client(api_key=settings.GEMINI_API_KEY)
+        genai.configure(api_key=settings.GEMINI_API_KEY)
+
+        self.model= genai.GenerativeModel('gemini-3-flash-preview')
 
 
     def answer_question(self, question, user_data):
@@ -28,14 +30,33 @@ Student Info:
 - Active Tasks: {user_data.get('active_tasks', 0)}
 - Completed Tasks: {user_data.get('completed_tasks', 0)}
 
-Their Plans: {user_data.get('plans', [])}
+Recent Quests:
+{self._format_plans(user_data.get('plans', []))}
 
 
-Question: {question}
+User Question: {question}
 """
         try:
-            response = self.client.models.generate_content(model='gemini-3-flash-preview', contents=prompt)
+            response = self.model.generate_content(prompt)
             return response.text
 
         except Exception as e:
-            return f"Sorry, error: {str(e)}"
+            error_str = str(e)
+
+            if "API_KEY_INVALID" in error_str:
+                return "⚠️ Invalid API key. Please check your .env file."
+            elif "quota" in error_str.lower():
+                return "⚠️ API quota exceeded. Try again later."
+            else:
+                return f"⚠️ Error: {error_str}"
+
+    def _format_plans(self, plans):
+        if not plans:
+            return "No quests yet"
+
+        lines= []
+        for plan in plans:
+            status = "✅ Completed" if plan.get('completed') else "🎯 In Progress"
+            lines.append(f"  - {plan.get('name')}: {status}")
+
+        return "\n".join(lines)

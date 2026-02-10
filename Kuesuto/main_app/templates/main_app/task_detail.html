@@ -1,72 +1,219 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 
-
-
-
-<div style="display:flex; justify-content:space-between; align-items:center; gap:16px;">
-  <h1>{{ task.name }}</h1>
-
-  <div style="display:flex; gap:10px;">
-    <a class="btn red" href="{% url 'tasks_delete' task.id %}">Delete</a>
+<!-- Task Hero Header - Border color changes based on completion status -->
+<div class="card" style="border:3px solid {% if task.is_completed %}var(--neon-green){% else %}{{ task.color }}{% endif %}; padding:40px; margin-bottom:40px; background:linear-gradient(135deg, var(--space-bg-secondary), var(--space-bg-tertiary)); box-shadow:0 0 30px {% if task.is_completed %}rgba(16, 185, 129, 0.3){% else %}{{ task.color }}33{% endif %};">
+  
+  <!-- Status Badge & Actions Row -->
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; flex-wrap:wrap; gap:20px;">
+    
+    <!-- Status Badge -->
+    <div style="display:flex; align-items:center; gap:15px;">
+      <div style="width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; {% if task.is_completed %}background:var(--neon-green); box-shadow:0 0 20px rgba(16, 185, 129, 0.6);{% else %}background:{{ task.color }}; box-shadow:0 0 20px {{ task.color }}99;{% endif %}">
+        {% if task.is_completed %}
+          <i class="material-icons" style="font-size:2.5rem; color:white;">check_circle</i>
+        {% else %}
+          <i class="material-icons" style="font-size:2.5rem; color:white;">radio_button_unchecked</i>
+        {% endif %}
+      </div>
+      
+      <div>
+        <div style="font-size:0.9rem; color:var(--space-text-secondary); margin-bottom:5px;">TASK STATUS</div>
+        <div style="font-size:1.3rem; font-weight:700; {% if task.is_completed %}color:var(--neon-green);{% else %}color:{{ task.color }};{% endif %}">
+          {% if task.is_completed %}✓ COMPLETED{% else %}○ IN PROGRESS{% endif %}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <a href="{% url 'plans_detail' task.plan.id %}" class="btn">
+        <i class="material-icons left">arrow_back</i>
+        BACK TO QUEST
+      </a>
+      <a href="{% url 'tasks_delete' task.id %}" class="btn red">
+        <i class="material-icons left">delete</i>
+        DELETE
+      </a>
+    </div>
+  </div>
+  
+  <!-- Task Title & Important Star -->
+  <div style="display:flex; align-items:start; gap:15px; margin-bottom:20px;">
+    <h1 style="font-size:3rem; margin:0; flex:1; line-height:1.2; color:{% if task.is_completed %}var(--neon-green){% else %}{{ task.color }}{% endif %}; text-shadow:0 0 20px {% if task.is_completed %}rgba(16, 185, 129, 0.5){% else %}{{ task.color }}66{% endif %};">
+      {{ task.name|upper }}
+    </h1>
+    {% if task.importance %}
+      <div style="display:flex; flex-direction:column; align-items:center; gap:5px;">
+        <i class="material-icons" style="color:var(--neon-orange); font-size:3rem; filter:drop-shadow(0 0 10px rgba(249, 115, 22, 0.6));">star</i>
+        <span style="font-size:0.8rem; color:var(--neon-orange); font-weight:700;">PRIORITY</span>
+      </div>
+    {% endif %}
+  </div>
+  
+  <!-- Task Position in Quest -->
+  <div style="font-size:1rem; color:var(--space-text-secondary);">
+    <strong>POSITION:</strong> Task #{{ task.position }} in Quest
   </div>
 </div>
 
-<div class="card">
-  <div class="card-content">
-    <p><strong>Position:</strong> {{ task.position }}</p>
-    <p><strong>Duration:</strong> {{ task.duration }}</p>
-    <p><strong>Color:</strong> {{ task.color }}</p>
-
-    <p><strong>Importance:</strong>
-      {% if task.importance %}
-        <span class="new badge orange" data-badge-caption="important"></span>
-      {% else %}
-        Normal
+<!-- Two Column Layout -->
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:30px; margin-bottom:40px;">
+  
+  <!-- Task Details Card -->
+  <div class="card" style="border:3px solid {{ task.color }}; margin:0; box-shadow:0 0 20px {{ task.color }}33;">
+    <div class="card-content">
+      <h3 style="margin:0 0 25px 0; font-size:1.8rem; color:{{ task.color }}; text-shadow:0 0 15px {{ task.color }}66;">
+        <i class="material-icons" style="vertical-align:middle; margin-right:10px;">assignment</i>
+        TASK DETAILS
+      </h3>
+      
+      <!-- Duration -->
+      <div style="margin-bottom:20px; padding:15px; background:var(--space-bg-tertiary); border-radius:10px; border-left:4px solid {{ task.color }}; box-shadow:-3px 0 10px {{ task.color }}22;">
+        <div style="font-size:0.85rem; color:var(--space-text-secondary); margin-bottom:5px;">DURATION</div>
+        <div style="font-size:1.2rem; font-weight:700; color:{{ task.color }};">
+          <i class="material-icons" style="vertical-align:middle; font-size:1.2rem;">schedule</i>
+          {{ task.duration }}
+        </div>
+      </div>
+      
+      <!-- Color Theme -->
+      <div style="margin-bottom:20px; padding:15px; background:var(--space-bg-tertiary); border-radius:10px; border-left:4px solid {{ task.color }}; box-shadow:-3px 0 10px {{ task.color }}22;">
+        <div style="font-size:0.85rem; color:var(--space-text-secondary); margin-bottom:8px;">COLOR THEME</div>
+        <div style="display:flex; align-items:center; gap:15px;">
+          <div style="width:50px; height:50px; background:{{ task.color }}; border-radius:10px; border:3px solid white; box-shadow:0 0 20px {{ task.color }}, 0 0 40px {{ task.color }}66;"></div>
+          <div>
+            <div style="font-family:monospace; color:var(--space-text-primary); font-size:1.1rem; margin-bottom:3px;">{{ task.color }}</div>
+            <div style="font-size:0.75rem; color:var(--space-text-secondary);">Task Accent Color</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Deadline (if exists) -->
+      {% if task.deadline %}
+      <div style="margin-bottom:20px; padding:15px; background:var(--space-bg-tertiary); border-radius:10px; border-left:4px solid var(--neon-orange); box-shadow:-3px 0 10px rgba(249, 115, 22, 0.2);">
+        <div style="font-size:0.85rem; color:var(--space-text-secondary); margin-bottom:5px;">DEADLINE</div>
+        <div style="font-size:1.2rem; font-weight:700; color:var(--neon-orange);">
+          <i class="material-icons" style="vertical-align:middle; font-size:1.2rem;">event</i>
+          {{ task.deadline|date:"M d, Y" }}
+        </div>
+      </div>
       {% endif %}
-    </p>
-
+      
+      <!-- Timestamps -->
+      <div style="margin-bottom:20px; padding:15px; background:var(--space-bg-tertiary); border-radius:10px; border-left:4px solid {{ task.color }}; box-shadow:-3px 0 10px {{ task.color }}22;">
+        <div style="font-size:0.85rem; color:var(--space-text-secondary); margin-bottom:10px;">TIMELINE</div>
+        <div style="font-size:0.9rem; color:var(--space-text-primary); margin-bottom:5px;">
+          <i class="material-icons" style="vertical-align:middle; font-size:1rem; color:{{ task.color }};">add_circle</i>
+          <strong>Created:</strong> {{ task.created_at|date:"M d, Y - H:i" }}
+        </div>
+        <div style="font-size:0.9rem; color:var(--space-text-primary);">
+          <i class="material-icons" style="vertical-align:middle; font-size:1rem; color:{{ task.color }};">update</i>
+          <strong>Updated:</strong> {{ task.updated_at|date:"M d, Y - H:i" }}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Notes & Parent Quest Card -->
+  <div style="display:flex; flex-direction:column; gap:30px;">
+    
+    <!-- Notes Card (if exists) -->
     {% if task.notes %}
-      <p><strong>Notes:</strong> {{ task.notes }}</p>
+    <div class="card" style="border:3px solid var(--neon-purple); margin:0; box-shadow:0 0 20px rgba(168, 85, 247, 0.3);">
+      <div class="card-content">
+        <h3 style="margin:0 0 20px 0; font-size:1.8rem; color:var(--neon-purple); text-shadow:0 0 15px rgba(168, 85, 247, 0.6);">
+          <i class="material-icons" style="vertical-align:middle; margin-right:10px;">description</i>
+          NOTES
+        </h3>
+        <div style="padding:20px; background:var(--space-bg-tertiary); border-radius:10px; border-left:4px solid var(--neon-purple); box-shadow:-3px 0 10px rgba(168, 85, 247, 0.2);">
+          <p style="margin:0; line-height:1.8; color:var(--space-text-primary); font-size:1.05rem; white-space:pre-wrap;">{{ task.notes }}</p>
+        </div>
+      </div>
+    </div>
     {% endif %}
-
-    {% if task.deadline %}
-      <p><strong>Deadline:</strong> {{ task.deadline }}</p>
-    {% endif %}
-
-    <p><strong>Status:</strong>
-      {% if task.is_completed %}
-        <span class="new badge green" data-badge-caption="completed"></span>
-      {% else %}
-        <span class="new badge grey" data-badge-caption="not completed"></span>
-      {% endif %}
-    </p>
-
-    <p><strong>Created:</strong> {{ task.created_at }}</p>
-    <p><strong>Updated:</strong> {{ task.updated_at }}</p>
+    
+    <!-- Parent Quest Card -->
+    <div class="card" style="border:3px solid var(--neon-cyan); margin:0; box-shadow:0 0 20px rgba(6, 182, 212, 0.3);">
+      <div class="card-content">
+        <h3 style="margin:0 0 20px 0; font-size:1.8rem; color:var(--neon-cyan); text-shadow:0 0 15px rgba(6, 182, 212, 0.6);">
+          <i class="material-icons" style="vertical-align:middle; margin-right:10px;">flag</i>
+          PARENT QUEST
+        </h3>
+        
+        <div style="padding:20px; background:var(--space-bg-tertiary); border-radius:10px; border:2px solid var(--neon-cyan); box-shadow:0 0 15px rgba(6, 182, 212, 0.2);">
+          <!-- Quest Name -->
+          <div style="margin-bottom:15px;">
+            <div style="font-size:0.85rem; color:var(--space-text-secondary); margin-bottom:8px;">QUEST NAME</div>
+            <a href="{% url 'plans_detail' task.plan.id %}" style="font-size:1.4rem; font-weight:700; color:var(--neon-cyan); text-decoration:none; display:block; text-shadow:0 0 10px rgba(6, 182, 212, 0.5);">
+              {{ task.plan.name|upper }}
+            </a>
+          </div>
+          
+          <!-- Quest Duration -->
+          <div style="margin-bottom:15px;">
+            <div style="font-size:0.85rem; color:var(--space-text-secondary); margin-bottom:5px;">DURATION</div>
+            <div style="font-size:1.1rem; color:var(--space-text-primary);">
+              <i class="material-icons" style="vertical-align:middle; font-size:1rem; color:var(--neon-cyan);">schedule</i>
+              {{ task.plan.duration }}
+            </div>
+          </div>
+          
+          <!-- Quest Progress -->
+          <div style="margin-bottom:20px;">
+            <div style="font-size:0.85rem; color:var(--space-text-secondary); margin-bottom:8px;">QUEST PROGRESS</div>
+            <div style="font-weight:700; margin-bottom:8px; color:var(--neon-green);">
+              {{ task.plan.completed_task_count }} / {{ task.plan.task_set.count }} tasks complete
+            </div>
+            <!-- Mini Progress Bar -->
+            <div style="width:100%; height:10px; background:var(--space-bg-primary); border-radius:10px; overflow:hidden; border:1px solid var(--neon-cyan);">
+              <div style="height:100%; background:linear-gradient(90deg, var(--neon-green), var(--neon-cyan)); width:{{ task.plan.completion_percentage }}%; transition:width 0.5s; box-shadow:0 0 10px rgba(16, 185, 129, 0.6);"></div>
+            </div>
+          </div>
+          
+          <!-- Back to Quest Button -->
+          <a href="{% url 'plans_detail' task.plan.id %}" class="btn" style="width:100%; text-align:center; background:var(--neon-cyan); border-color:var(--neon-cyan);">
+            <i class="material-icons left">arrow_back</i>
+            BACK TO QUEST
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<h4>Parent Plan</h4>
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">
-      <a href="{% url 'plans_detail' task.plan.id %}">{{ task.plan.name }}</a>
-    </span>
-    <p><strong>Duration:</strong> {{ task.plan.duration }}</p>
-    <p><strong>Status:</strong>
-      {% if task.plan.is_completed %}
-        Completed
-      {% else %}
-        In progress
-      {% endif %}
-    </p>
-  </div>
+<!-- Task Completion Toggle -->
+{% if not task.is_completed %}
+<div class="card" style="border:3px solid {{ task.color }}; padding:30px; text-align:center; background:linear-gradient(135deg, var(--space-bg-secondary), var(--space-bg-tertiary)); box-shadow:0 0 30px {{ task.color }}33;">
+  <h3 style="margin:0 0 20px 0; font-size:1.8rem; color:{{ task.color }}; text-shadow:0 0 15px {{ task.color }}66;">
+    <i class="material-icons" style="vertical-align:middle; font-size:2rem; margin-right:10px;">check_circle</i>
+    READY TO COMPLETE THIS TASK?
+  </h3>
+  <form method="post" action="{% url 'task_toggle_complete' task.id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn" style="font-size:1.2rem; padding:15px 40px; background:{{ task.color }}; border-color:{{ task.color }}; box-shadow:0 0 20px {{ task.color }}66;">
+      <i class="material-icons left">check</i>
+      MARK AS COMPLETE
+    </button>
+  </form>
 </div>
-
-<p style="margin-top:18px;">
-  <a class="btn grey" href="{% url 'plans_detail' task.plan.id %}">Back to Plan</a>
-</p>
+{% else %}
+<div class="card" style="border:3px solid var(--neon-green); padding:30px; text-align:center; background:linear-gradient(135deg, rgba(16, 185, 129, 0.1), var(--space-bg-tertiary)); box-shadow:0 0 30px rgba(16, 185, 129, 0.3);">
+  <h3 style="margin:0 0 15px 0; font-size:1.8rem; color:var(--neon-green); text-shadow:0 0 15px rgba(16, 185, 129, 0.6);">
+    <i class="material-icons" style="vertical-align:middle; font-size:2.5rem; margin-right:10px;">celebration</i>
+    TASK COMPLETED!
+  </h3>
+  <p style="margin:0 0 20px 0; font-size:1.1rem; color:var(--space-text-primary);">Great job! You've completed this task.</p>
+  <form method="post" action="{% url 'task_toggle_complete' task.id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn grey">
+      <i class="material-icons left">undo</i>
+      MARK AS INCOMPLETE
+    </button>
+  </form>
+</div>
+{% endif %}
 
 {% endblock %}

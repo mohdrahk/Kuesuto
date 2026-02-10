@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; flex-wrap:wrap; gap:20px;">
+    <div>
+        <h1 style="margin:0 0 10px 0; font-size:2.5rem;">EDIT TASK</h1>
+        <p style="margin:0; color:var(--space-text-secondary); font-size:1.1rem;">
+            Updating: <strong style="color:var(--neon-cyan);">{{ task.name }}</strong>
+        </p>
+    </div>
+    <a href="{% url 'tasks_detail' task.pk %}" class="btn grey">
+        <i class="material-icons left">close</i>
+        CANCEL
+    </a>
+</div>
+
+<div class="card" style="border:3px solid {{ task.color }}; box-shadow:0 0 20px {{ task.color }}33;">
+    <div class="card-content">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div style="display:flex; gap:15px; margin-top:30px; padding-top:20px; border-top:2px solid var(--space-bg-tertiary);">
+                <button type="submit" class="btn" style="flex:1; background:{{ task.color }}; border-color:{{ task.color }};">
+                    <i class="material-icons left">save</i>
+                    SAVE CHANGES
+                </button>
+                <a href="{% url 'tasks_detail' task.pk %}" class="btn grey" style="flex:1;">
+                    <i class="material-icons left">close</i>
+                    CANCEL
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card" style="border:3px solid var(--neon-cyan); margin-top:30px;">
+    <div class="card-content">
+        <h3 style="margin:0 0 15px 0; font-size:1.5rem; color:var(--neon-cyan);">
+            <i class="material-icons" style="vertical-align:middle; margin-right:10px;">flag</i>
+            PARENT QUEST: {{ task.plan.name|upper }}
+        </h3>
+        <p style="margin:0; color:var(--space-text-secondary);">
+            This task is part of the <strong>{{ task.plan.name }}</strong> quest. 
+            <a href="{% url 'plans_detail' task.plan.id %}" style="color:var(--neon-cyan);">View full quest →</a>
+        </p>
+    </div>
+</div>
+
+{% endblock %}
