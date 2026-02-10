@@ -21,21 +21,21 @@
 
 <!-- Quest Header Card -->
 <div class="card" style="border: 3px solid var(--neon-purple); padding:40px; margin-bottom:40px;">
-  
+
   <!-- Quest Title & Meta -->
   <div style="display:flex; justify-content:space-between; align-items:center; gap:30px; flex-wrap:wrap; margin-bottom:30px;">
     <div style="flex:1; min-width:300px;">
       <h1 style="font-size:3rem; margin:0 0 15px 0;">{{ plan.name|upper }}</h1>
       <p style="margin:0; font-size:1.1rem; color:var(--space-text-secondary);">
-        <strong>DURATION:</strong> {{ plan.duration }} • 
+        <strong>DURATION:</strong> {{ plan.duration }} •
         <strong>{{ plan.completed_task_count }} / {{ plan.task_set.count }} TASKS COMPLETE</strong>
       </p>
     </div>
-    
+
     <!-- Color Indicator -->
     <div style="width:80px; height:80px; background-color:{{ plan.color }}; border-radius:15px; border:3px solid var(--neon-cyan); flex-shrink:0;"></div>
   </div>
-  
+
   <!-- Progress Bar -->
   <div>
     <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.9rem;">
@@ -71,23 +71,29 @@
     <!-- Horizontal Scroll Container -->
     <div style="display:flex; gap:40px; overflow-x:auto; padding:20px 0; margin:40px 0;">
       {% for task in tasks %}
-        
+
         <!-- Single Task Column -->
         <div style="display:flex; flex-direction:column; align-items:center; flex:0 0 auto; width:320px; min-width:300px;">
-          
+
           <!-- Status Icon Above -->
-          <div style="width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px; {% if task.is_completed %}background:var(--neon-green);{% else %}background:var(--space-bg-tertiary); border:3px solid var(--space-text-secondary);{% endif %} box-shadow:0 0 15px rgba(168, 85, 247, 0.4);">
-            {% if task.is_completed %}
-              <i class="material-icons" style="font-size:2.5rem; color:white;">check_circle</i>
-            {% else %}
-              <i class="material-icons" style="font-size:2.5rem; color:white;">radio_button_unchecked</i>
-            {% endif %}
-          </div>
+          <form method="post" action="{% url 'task_toggle_complete' task.id %}" class="status-toggle-form">
+            {% csrf_token %}
+            <button type="submit" class="status-toggle-btn" aria-label="Toggle task completion">
+              <span class="status-circle {% if task.is_completed %}is-done{% else %}is-active{% endif %}">
+              {% if task.is_completed %}
+                <i class="material-icons">check</i>
+              {% else %}
+                <i class="material-icons">radio_button_unchecked</i>
+              {% endif %}
+              </span>
+            </button>
+          </form>
+
 
           <!-- Task Card -->
           <div class="card {% if task.is_completed %}task-completed{% endif %}" style="border:3px solid {{ task.color }}; margin:0; width:100%;">
             <div class="card-content">
-              
+
               <!-- Title & Star -->
               <div style="display:flex; justify-content:space-between; align-items:start; gap:10px; margin-bottom:15px;">
                 <span class="card-title" style="margin:0; font-size:1.1rem; flex:1; line-height:1.3;">
@@ -112,7 +118,7 @@
 
               <!-- Status -->
               <p style="margin-bottom:20px; font-size:0.9rem;">
-                <strong>STATUS:</strong> 
+                <strong>STATUS:</strong>
                 {% if task.is_completed %}
                   <span style="color:var(--neon-green); font-weight:700;">✓ DONE</span>
                 {% else %}
@@ -134,7 +140,7 @@
                     {% endif %}
                   </button>
                 </form>
-                
+
                 <a href="{% url 'tasks_detail' task.id %}" class="btn-small" style="width:100%; text-align:center;">
                   <i class="material-icons left">visibility</i>
                   VIEW
@@ -202,7 +208,7 @@ div[style*="overflow-x:auto"]::-webkit-scrollbar-thumb:hover {
     flex-direction: column !important;
     overflow-x: visible !important;
   }
-  
+
   div[style*="overflow-x:auto"] > div {
     width: 100% !important;
   }

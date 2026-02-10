@@ -155,11 +155,11 @@ class TaskCreate(LoginRequiredMixin, CreateView):
 
 class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
-    
+
 
 class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
-    fields = ["name", "duration", "importance", "color", "notes", "deadline"]  
+    fields = ["name", "duration", "importance", "color", "notes", "deadline"]
     success_url = '/plans/'
 
 class TaskDelete(LoginRequiredMixin, DeleteView):
@@ -181,10 +181,11 @@ def task_toggle_complete(request, task_id):
 
     old_rank = profile.current_rank
 
+    points = 20 if task.importance else 10
 
     if task.is_completed:
-        profile.score +=10
-        messages_texts.append(f'✅ +10 points! Total: {profile.score}')
+        profile.score += points
+        messages_texts.append(f'✅ +{points} points{"(important)" if task.importance else ""}! Total: {profile.score}')
 
         if all_tasks.exists() and not all_tasks.filter(is_completed=False).exists():
             task.plan.is_completed = True
@@ -194,8 +195,8 @@ def task_toggle_complete(request, task_id):
             profile.score += 30
             messages_texts.append(f'🎉 +30 Bonus for completing all tasks! Total: {profile.score}')
     else:
-            profile.score -= 10
-            messages_texts.append(f'💀 -10 points! Total: {profile.score}')
+            profile.score -= points
+            messages_texts.append(f'💀 -{points} points removed{" (important)" if task.importance else ""}! Total: {profile.score}')
 
             if was_plan_completed:
                 task.plan.is_completed = False
