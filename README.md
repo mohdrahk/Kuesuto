@@ -70,6 +70,27 @@ Personalize quests with colors and themes to make every mission feel unique.
 ![profile](Kuesuto\main_app\static\images\profile.png)
 
 ---
+## 🛠 Tech Stack
+
+### Frontend and Backend
+[![Django](https://img.shields.io/badge/Django-092E20?logo=django&logoColor=white&style=flat-square)](https://www.djangoproject.com/)
+[![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white&style=flat-square)](https://www.python.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white&style=flat-square)](https://www.postgresql.org/)
+
+### AI Assistant
+[![Gemini AI](https://img.shields.io/badge/Gemini%20AI-FF6F61?logo=artificialintelligence&logoColor=white&style=flat-square)](https://www.example.com/)
+
+### Frontend/UI
+[![Materialize CSS](https://img.shields.io/badge/Materialize-C2185B?logo=materialdesign&logoColor=white&style=flat-square)](https://materializecss.com/)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white&style=flat-square)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white&style=flat-square)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black&style=flat-square)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+
+### Security & Auth
+[![Django Auth](https://img.shields.io/badge/Django%20Auth-092E20?logo=django&logoColor=white&style=flat-square)](https://docs.djangoproject.com/en/4.2/topics/auth/)
+
+---
+
 
 
 
