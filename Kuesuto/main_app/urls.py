@@ -26,7 +26,8 @@ urlpatterns = [
     path('tasks/<int:pk>/', views.TaskDetail.as_view(), name='tasks_detail'),
     path('tasks/<int:pk>/delete/', views.TaskDelete.as_view(), name='tasks_delete'),
     path('tasks/<int:task_id>/toggle/', views.task_toggle_complete, name='task_toggle_complete'),
-
+    path('tasks/<int:pk>/', views.TaskDetail.as_view(), name='tasks_detail'),
+    path('tasks/<int:pk>/update/', views.TaskUpdate.as_view(), name='tasks_update'),
     # AI CRUD
     path('ai/ask/', views.ask_ai, name='ask_ai'),
 ]
