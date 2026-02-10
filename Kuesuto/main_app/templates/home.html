@@ -1,6 +1,26 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
+
+<!-- Full-Width Hero Video Banner -->
+<div style="position: relative; width:100%; margin: -20px -20px 60px -20px; overflow: hidden; height: 600px;">
+  
+  <!-- Video Background -->
+  <video autoplay loop muted playsinline style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
+    <source src="{% static 'images/hero-banner.webm' %}" type="video/webm">
+    <img src="{% static 'images/hero-banner.png' %}" alt="Kuesuto" style="width: 100%; height: 100%; object-fit: cover;">
+  </video>
+  
+  <!-- White Text with Shadow Overlay -->
+<div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); z-index: 10; max-width: 900px;">
+  <h1 class="hero-video-text">
+    FINISH TASKS
+  </h1>
+  <h1 class="hero-video-text" style="margin-top: 10px;">
+    AND LEVEL UP
+  </h1>
+</div>
+</div>
 
 <!-- Hero Section -->
 <div class="hero-section">
@@ -69,7 +89,6 @@
   
   <div class="feature-grid">
     
-    <!-- Feature 1: Quest Management -->
     <div class="feature-card">
       <div class="feature-icon">📋</div>
       <h3 class="feature-title">Quest Management</h3>
@@ -78,7 +97,6 @@
       </p>
     </div>
 
-    <!-- Feature 2: Score & Ranking -->
     <div class="feature-card">
       <div class="feature-icon">🏆</div>
       <h3 class="feature-title">Score & Ranking</h3>
@@ -87,7 +105,6 @@
       </p>
     </div>
 
-    <!-- Feature 3: AI Assistant -->
     <div class="feature-card">
       <div class="feature-icon">🤖</div>
       <h3 class="feature-title">AI Quest Assistant</h3>
@@ -96,7 +113,6 @@
       </p>
     </div>
 
-    <!-- Feature 4: Task Tracking -->
     <div class="feature-card">
       <div class="feature-icon">✅</div>
       <h3 class="feature-title">Task Tracking</h3>
@@ -105,7 +121,6 @@
       </p>
     </div>
 
-    <!-- Feature 5: Progress Visualization -->
     <div class="feature-card">
       <div class="feature-icon">📊</div>
       <h3 class="feature-title">Progress Dashboard</h3>
@@ -114,7 +129,6 @@
       </p>
     </div>
 
-    <!-- Feature 6: Gamification -->
     <div class="feature-card">
       <div class="feature-icon">🎮</div>
       <h3 class="feature-title">Level Up Your Life</h3>
