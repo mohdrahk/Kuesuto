@@ -32,10 +32,10 @@
           <div class="task-card__header">
             <div class="task-title">Task {{ forloop.counter }} </div>
 
-            <label class="importance-pill">
+            <label class="importance-pill" title="Mark as important">
               {{ tform.importance }}
               <span class="importance-pill__ui">
-                <span class="star" >★</span>
+                <span class="star" aria-hidden="true"></span>
                 Important
               </span>
             </label>
@@ -87,10 +87,10 @@
         <div class="task-card__header">
           <div class="task-title">New Task</div>
 
-          <label class="importance-pill">
+          <label class="importance-pill" title="Mark as important">
             {{ task_formset.empty_form.importance }}
             <span class="importance-pill__ui">
-              <span class="star">★</span>
+              <span class="star" aria-hidden="true"></span>
               Important
             </span>
           </label>
