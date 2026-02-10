@@ -1,31 +1,16 @@
+![logo](Kuesuto\main_app\static\images\kuesto-logo.png)
+
 ## Kuesuto
 
-**Kuesuto** is a web application designed for moments that helps users create their Plans "Quests" and manage their adventures to complete the quests.
+**Kuesuto** is a gamified productivity platform that transforms everyday tasks into epic quests. Built for people who want more than a boring to-do list, Kuesuto turns goal-setting into an RPG-style adventure where progress feels rewarding, motivating, and fun.
 
-Each Task completed will give the users XP to encourage them to keep finishing their task and upgrade their rate.
+Instead of checking off lifeless tasks, users create **quests**, complete **missions**, earn **points**, and **level up** as they work toward their goals. Whether you’re planning personal growth, managing projects, or building better habits, Kuesuto makes productivity feel like a game worth playing.
 
----
+At its core, Kuesuto blends **smart tracking**, **AI-powered guidance**, and a **futuristic space-themed interface** to keep users engaged and consistent. A built-in AI quest assistant provides insights, motivation, and progress awareness, helping users stay on track and adapt their strategy as they advance.
 
-## 📌 Project Overview
-
-Users can:
-- Create Plans "Quests" and set deadlines
-- Edit their plans 
-- Create their tasks in a plan
-- Gain XP for each completed task
-
----
-
-## 🛠 Tech Stack
-
-### Frontend and backend
-[![Django](https://img.shields.io/badge/Django-092E20?logo=django&logoColor=white&style=flat-square)](https://www.djangoproject.com/)
-[![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white&style=flat-square)](https://www.python.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white&style=flat-square)](https://www.postgresql.org/)
+Kuesuto is designed to make achievement feel exciting—not exhausting.
 
 
----
 
-## ✨ Slackboard
 
-[Our Amazing Board](https://trello.com/invite/b/696f9a8ad39ba837987c1f62/ATTI82bcaa9f784b811418364b31e85b473dEBACC647/kuesuto)
+
