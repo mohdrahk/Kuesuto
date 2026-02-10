@@ -1438,6 +1438,9 @@ hr {
 
 .danger-card {
   border-color: #dc2626 !important;
+  grid-column: 1 / -1 !important;
+  max-width: 700px !important;
+  justify-self: center !important;
 }
 
 .danger-card .profile-card-header {
