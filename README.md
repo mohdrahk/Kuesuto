@@ -18,6 +18,35 @@ Many productivity tools focus on tasks but fail to keep users motivated. Over ti
 Kuesuto was built to change that. Inspired by RPG mechanics, it turns goal-setting into a quest-based experience where every task contributes to progression and achievement.
 
 ---
+**Link**
+
+LINK TO THE SITE:
+
+---
+
+
+## 🕹️ How You Play
+
+🚀 **Start a Quest**
+Turn any goal into a quest and break it down into clear, achievable missions.
+
+✅ **Complete Missions**
+Finish tasks to earn points and move your quest closer to completion.
+
+⬆️ **Level Up**
+Progress through ranks as you stay consistent and accomplish more quests.
+
+🤖 **Get AI Support**
+Receive smart suggestions, reminders, and productivity insights from your AI companion.
+
+📊 **Track Your Journey**
+Visual progress indicators show how far you’ve come and what’s left to conquer.
+
+🎨 **Customize Your Experience**
+Personalize quests with colors and themes to make every mission feel unique.
+
+
+---
 
 
 
