@@ -51,7 +51,7 @@ Personalize quests with colors and themes to make every mission feel unique.
 
 **Home Page**
 
-![home](Kuesuto/main_app/static/images/home.png)
+![home](Kuesuto/main_app/static/images/home2.png)
 
 **Quest Page**
 
