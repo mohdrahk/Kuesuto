@@ -4,7 +4,7 @@
 {% block content %}
 
 <!-- Task Hero Header - Border color changes based on completion status -->
-<div class="card" style="border:4px solid {% if task.is_completed %}var(--neon-green){% else %}{{ task.color }}{% endif %} !important; padding:40px; margin-bottom:40px; background:linear-gradient(135deg, var(--space-bg-secondary), var(--space-bg-tertiary)); box-shadow:0 0 30px {% if task.is_completed %}rgba(16, 185, 129, 0.3){% else %}{{ task.color }}33{% endif %}!important; ">
+<div class="card" style="border:4px solid {% if task.is_completed %}var(--neon-green){% else %}{{ task.color }}{% endif %} !important; padding:40px; margin-bottom:40px; background:linear-gradient(135deg, var(--space-bg-secondary), var(--space-bg-tertiary)); box-shadow:0 0 30px {% if task.is_completed %}rgba(16, 185, 129, 0.3){% else %}{{ task.color }}33{% endif %} !important; ">
 
   <!-- Status Badge & Actions Row -->
   <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; flex-wrap:wrap; gap:20px;">
@@ -193,10 +193,33 @@
   </h3>
   <form method="post" action="{% url 'task_toggle_complete' task.id %}">
     {% csrf_token %}
-    <button type="submit" class="btn" style="font-size:1.2rem; padding:15px 40px; background:{{ task.color }}; border-color:{{ task.color }}; box-shadow:0 0 20px {{ task.color }}66;">
-      <i class="material-icons left">check</i>
-      MARK AS COMPLETE
-    </button>
+    <button
+  type="submit"
+  class="btn"
+  style="
+    background: {{ task.color }} !important;
+    border-color: {{ task.color }} !important;
+    box-shadow: 0 0 20px {{ task.color }}66 !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+
+    white-space: nowrap !important;
+    line-height: 1 !important;
+    height: auto !important;
+    min-height: 44px !important;
+    padding: 14px 40px !important;
+
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  "
+>
+  <i class="material-icons left" style="margin:0 !important;">check</i>
+  MARK AS COMPLETE
+</button>
+
   </form>
 </div>
 {% else %}
@@ -209,25 +232,32 @@
   <form method="post" action="{% url 'task_toggle_complete' task.id %}">
     {% csrf_token %}
     <button
-      type="submit"
-      class="btn"
-      style="
-        font-size:1.2rem;
-        padding:15px 40px;
+  type="submit"
+  class="btn"
+  style="
+    background: {{ task.color }} !important;
+    border-color: {{ task.color }} !important;
+    box-shadow: 0 0 20px {{ task.color }}66 !important;
 
-        background: {{ task.color }} !important;
-        border-color: {{ task.color }} !important;
-        box-shadow: 0 0 20px {{ task.color }}66 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
 
-        display:inline-flex;
-        align-items:center;
-        justify-content:center;
-        gap:10px;
-      "
-      >
-      <i class="material-icons left" style="margin:0 !important;">check</i>
-      MARK AS COMPLETE
-    </button>
+    white-space: nowrap !important;
+    line-height: 1 !important;
+    height: auto !important;
+    min-height: 44px !important;
+    padding: 14px 40px !important;
+
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  "
+>
+  <i class="material-icons left" style="margin:0 !important;">check</i>
+  MARK AS COMPLETE
+</button>
+
   </form>
 </div>
 {% endif %}

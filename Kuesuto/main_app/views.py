@@ -50,25 +50,29 @@ class PlanCreate(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+        # if user already submitted the form, then show/use their data
         if self.request.POST:
             context["task_formset"] = TaskFormSet(self.request.POST)
         else:
+            # If opening the page, then show empty form
             context["task_formset"] = TaskFormSet()
         return context
 
-    @transaction.atomic
+    @transaction.atomic # Save plan and tasks together safely
     def form_valid(self, form):
         context = self.get_context_data()
         task_formset = context["task_formset"]
 
+        # If tasks have errors, stop everything and show the errors
         if not task_formset.is_valid():
             return self.form_invalid(form)
 
+        # Create plan object first (not fully saved yet)
         plan = form.save(commit=False)
         plan.user = self.request.user
         plan.save()
 
+        # Connect tasks to this plan
         task_formset.instance = plan
         tasks = task_formset.save(commit=False)
 
@@ -88,6 +92,7 @@ class PlanUpdate(LoginRequiredMixin, UpdateView):
     template_name = "main_app/plan_form.html"
 
     def get_context_data(self, **kwargs):
+        # Send task forms for this plan
         context = super().get_context_data(**kwargs)
 
         if self.request.POST:
@@ -95,20 +100,23 @@ class PlanUpdate(LoginRequiredMixin, UpdateView):
                 self.request.POST, instance=self.object
             )
         else:
+            # Load existing tasks into form
             context["task_formset"] = TaskFormSet(instance=self.object)
         return context
 
-    @transaction.atomic
+    @transaction.atomic # Update tasks and plan together
     def form_valid(self, form):
         context = self.get_context_data()
         task_formset = context["task_formset"]
 
+        # If one of them is invalid, then stop
         if not task_formset.is_valid():
             return self.form_invalid(form)
 
         plan = form.save()
         tasks = task_formset.save(commit=False)
 
+        # re-save the tasks with their new order
         for i, task in enumerate(tasks, start=1):
             task.plan = plan
             task.position = i

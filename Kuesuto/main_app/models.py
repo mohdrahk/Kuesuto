@@ -47,6 +47,7 @@ class Plan(models.Model):
         return reverse("plans_detail", kwargs={"plan_id": self.id})
 
     def refresh_completion_status(self):
+        # Check if all tasks are completed in this plan
         all_done = self.task_set.exists() and not self.task_set.filter(is_completed=False).exists()
 
         self.is_completed = all_done

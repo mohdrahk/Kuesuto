@@ -20,6 +20,7 @@ class PlanForm(ModelForm):
         model = Plan
         fields = ['name', 'duration', 'color']
 
+# this connects multiple tasks to one plan, also for creating/editing tasks on the same page as plan
 TaskFormSet = inlineformset_factory(
     Plan,
     Task,
