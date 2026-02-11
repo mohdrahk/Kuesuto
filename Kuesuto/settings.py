@@ -23,6 +23,7 @@ if not 'ON_HEROKU' in os.environ:
     DEBUG = True
 ALLOWED_HOSTS = ['*']
 
+
 # Application definition
 INSTALLED_APPS = [
     'main_app.apps.MainAppConfig',
