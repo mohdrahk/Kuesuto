@@ -47,11 +47,24 @@ Personalize quests with colors and themes to make every mission feel unique.
 
 
 ---
+
+## ERD (Entity Relationship Diagram)
+![erd](Kuesuto/main_app/static/images/erd.png)
+
+---
+
+## Wireframe and Trello Board
+Link to the Wireframe: [Wireframe](https://www.figma.com/make/P7FKgbIKJuReWfHLx9RBe5/Task-Planning-Website?t=PTpLOeYIPT0WK65K-1)
+
+Link to the Trello Board: [Trello Board](https://trello.com/b/8bb60wX2/kuesuto)
+
+
+---
 ## Final Product
 
 **Home Page**
 
-![home](Kuesuto/main_app/static/images/home.png)
+![home](Kuesuto/main_app/static/images/home2.png)
 
 **Quest Page**
 
